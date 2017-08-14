@@ -20,7 +20,7 @@
 			</tr>
 			<tr>
 				<td><form:label path="email">Email Id</form:label></td>
-				<td><form:input path="username" name="email" id="email" />
+				<td><form:input path="email" name="email" id="email" />
 			</tr>
 			<tr>
 				<td><form:label path="password">Password</form:label></td>
@@ -39,6 +39,11 @@
 				<td><form:label path="mobile">Mobile No.</form:label></td>
 				<td><form:input path="mobile" />
 			</tr>
+			<tr>
+				<td><form:label path="dob">Date Of Birth</form:label></td>
+				<td><form:input path="dob" />
+			</tr>
+			
 			<tr>
 				<td><form:label path="pincode">Pincode</form:label></td>
 				<td><form:input path="pincode" />
