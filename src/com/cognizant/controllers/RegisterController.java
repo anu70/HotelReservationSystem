@@ -1,5 +1,6 @@
 package com.cognizant.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,8 @@ import com.cognizant.utils.Global;
 
 @Controller
 public class RegisterController {
-	
-	private ApplicationContext applicationContext;
+	@Autowired
+	UserDAO userDAO;
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegistrationForm(ModelMap model) {
@@ -30,11 +31,15 @@ public class RegisterController {
 	
 	@RequestMapping(value = "/processRegistration", method = RequestMethod.POST)
 	public String processRegistration(@ModelAttribute("user")User user,ModelMap model){
-		applicationContext = new ClassPathXmlApplicationContext("spring-dispatcher-servlet.xml");
-        UserDAO userDAO = (UserDAO) applicationContext.getBean("userDAO");
         
-        userDAO.register(user);
-		model.addAttribute("username",user.getUsername());
-		return "RegistrationSuccessful";
+        int errorCode = userDAO.register(user);
+        if(errorCode==1){
+        	model.addAttribute("username",user.getUsername());
+    		return "RegistrationSuccessful";
+        }
+        else{
+        	return "RegistrationForm";
+        }
+		
 	}
 }

@@ -1,5 +1,6 @@
 package com.cognizant.models;
 
+
 public class User {
 	String username;
 	String role;
