@@ -6,53 +6,89 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registration</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/demo.css" />
 </head>
 <body>
-	<form:form id="registrationForm" modelAttribute="user" action="processRegistration" method="post">
-		<table align="centre">
-			<tr>
-				<td><form:label path="username">User name</form:label></td>
-				<td><form:input path="username" />
-			</tr>
-			<tr>
-				<td><form:label path="role">Role</form:label></td>
-				<td><form:select path="role" items="${rolesList}"></form:select>
-			</tr>
-			<tr>
-				<td><form:label path="email">Email Id</form:label></td>
-				<td><form:input path="email" name="email" id="email" />
-			</tr>
-			<tr>
-				<td><form:label path="password">Password</form:label></td>
-				<td><form:password path="password" name="password"
-						id="password" /></td>
-			</tr>
-			<tr>
-				<td><form:label path="country">Country</form:label></td>
-				<td><form:select path="country" items="${countriesList}"></form:select>
-			</tr>
-			<tr>
-				<td><form:label path="city">City</form:label></td>
-				<td><form:select path="city" items="${citiesList}"></form:select>
-			</tr>
-			<tr>
-				<td><form:label path="mobile">Mobile No.</form:label></td>
-				<td><form:input path="mobile" />
-			</tr>
-			<tr>
-				<td><form:label path="dob">Date Of Birth</form:label></td>
-				<td><form:input path="dob" />
-			</tr>
-			
-			<tr>
-				<td><form:label path="pincode">Pincode</form:label></td>
-				<td><form:input path="pincode" />
-			</tr>
-			<tr>
-				<td><form:button>Register</form:button></td>
-			</tr>
+	<div class="container">
+		<!-- freshdesignweb top bar -->
+		<div class="freshdesignweb-top">
+			<a href="home">Home</a>
+			</td>
+			</td> <span class="right"> <a href="login"> <strong>Already
+						registered? Login here. </strong>
+			</a>
+			</span>
+			<div class="clr"></div>
+		</div>
+		<header>
+		<h1>
+			<span>Hotel Reservation System</span> Registration Form
+		</h1>
+		</header>
+		<div class="form">
+			<form:form id="registrationForm" modelAttribute="user"
+				action="processRegistration" method="post">
+				<form:errors  />
+				<p class="contact">
+					<form:label path="username">Username</form:label>
+				</p>
+				<form:input path="username" maxlength="20" minlength="3" required="required"></form:input>
+				<p class="contact">
+					<form:label path="role">Role</form:label>
+				</p>
+				<form:select class="select-style" path="role" items="${rolesList}"
+					cssStyle="width:420px"></form:select>
+				<br>
+				<br>
+				<p class="contact">
+					<form:label path="email" maxlength="50">Email Id</form:label>
+				</p>
+				<form:input path="email" name="email" id="email" required="required" type="email"/>
+				<p class="contact">
+					<form:label path="password">Password</form:label>
+				</p>
+				<form:password path="password" name="password" id="password"
+					required="required" minlength="8" maxlength="30"/>
+				<p class="contact">
+					<form:label path="country">Country</form:label>
+				</p>
+				<form:select class="select-style" path="country"
+					items="${countriesList}" cssStyle="width:420px"></form:select>
+				<br>
+				<br>
+				<p class="contact">
+					<form:label path="city">City</form:label>
+				</p>
+				<form:select class="select-style" path="city" items="${citiesList}"
+					cssStyle="width:420px"></form:select>
+				<br>
+				<br>
+				<p class="contact">
+					<form:label path="mobile">Mobile No.</form:label>
+				</p>
+				<form:input path="mobile" required="required" type="text"
+					onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+					minlength="10" maxlength="10" />
+				<p class="contact">
+					<form:label path="dob">Date Of Birth</form:label>
+				</p>
+				<form:input path="dob" required="required" />
+				<p class="contact">
+					<form:label path="pincode">Pincode</form:label>
+				</p>
+				<form:input path="pincode" required="required" type="text"
+					onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+					minlength="6" maxlength="6" />
+				<input class="buttom" value="Register" type="submit" />
 
-		</table>
-	</form:form>
+			</form:form>
+		</div>
+
+	</div>
+
 </body>
+<script>
+	$("#someinput").attr('required', '');
+</script>
 </html>

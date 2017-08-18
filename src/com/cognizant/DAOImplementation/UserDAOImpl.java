@@ -24,6 +24,9 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int register(User user) {
+		if(alreadyexist(user)){
+			return 2;
+		}
 		String sql = "INSERT INTO User(name,role,email_id,password,dob,country,city,mobile,pincode) VALUES(?,?,?,?,?,?,?,?,?)";
 		int returnValue = getJdbcTemplate().update(sql,
 				new Object[] { user.getUsername().trim(), user.getRole().trim(), user.getEmail().trim(),
@@ -34,9 +37,15 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User validateUser(Login login) {
-		String sql = "SELECT * from User where name = ? and password = ?";
-		List<User> users = getJdbcTemplate().query(sql, new Object[] { login.getUsername(),login.getPassword() }, new UserMapper());
+		String sql = "SELECT * from User where email_id = ? and password = ?";
+		List<User> users = getJdbcTemplate().query(sql, new Object[] { login.getEmail(),login.getPassword() }, new UserMapper());
 		return users.size() > 0 ? users.get(0) : null;
+	}
+	
+	public boolean alreadyexist(User user){
+		String sql = "SELECT * from User where email_id=?";
+		List<User> users = getJdbcTemplate().query(sql, new Object[] { user.getEmail() }, new UserMapper());
+		return users.size() > 0 ? true:false;
 	}
 
 	class UserMapper implements RowMapper<User> {
@@ -44,6 +53,14 @@ public class UserDAOImpl implements UserDAO {
 		public User mapRow(ResultSet result, int arg1) throws SQLException {
 			User user = new User();
 			user.setUsername(result.getString("name"));
+			user.setCity(result.getString("city"));
+			user.setCountry(result.getString("country"));
+			user.setDob(result.getString("dob"));
+			user.setEmail(result.getString("email_id"));
+			user.setMobile(result.getString("mobile"));
+			user.setPincode(result.getString("pincode"));
+			user.setRole(result.getString("role"));
+			user.setPassword(result.getString("password"));
 			return user;
 		}
 

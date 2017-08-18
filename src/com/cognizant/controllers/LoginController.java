@@ -1,10 +1,8 @@
 package com.cognizant.controllers;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,14 +23,17 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/processLogin",method = RequestMethod.POST)
-	public String processLogin(@Valid @ModelAttribute("login")Login login,BindingResult result,ModelMap model){
+	public String processLogin(@ModelAttribute("login")Login login,ModelMap model){
         User user = userDAO.validateUser(login);
         if(user==null){
-        	return "LoginForm";
+        	return "redirect:/login";
         }
         else{
         	model.addAttribute("username",user.getUsername());
-    		return "WelcomeAdmin";
+        	if(user.getRole().equals("admin"))
+        		return "admin/WelcomeAdmin";
+        	else
+        		return "customer/WelcomeCustomer";
         }
 		
 	}

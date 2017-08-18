@@ -6,25 +6,40 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/demo.css" />
 </head>
 
 <body>
-	<form:form id="loginForm" modelAttribute="login" action="processLogin"
-		method="post">
-		<table>
-			<tr>
-				<td><form:label path="username">Username</form:label></td>
-				<td><form:input path="username"></form:input></td>
-				<td><form:errors path="username"></form:errors></td>
-			</tr>
-			<tr>
-				<td><form:label path="password">Password</form:label></td>
-				<td><form:password path="password"></form:password></td>
-			</tr>
-			<tr>
-				<td><form:button>Login</form:button></td>
-			</tr>
-		</table>
-	</form:form>
+	<div class="container">
+		<!-- freshdesignweb top bar -->
+		<div class="freshdesignweb-top">
+			<a href="home">Home</a>
+			</td> <span class="right"> <a href="register"> <strong>Register
+						here</strong>
+			</a>
+			</span>
+			<div class="clr"></div>
+		</div>
+		<header>
+		<h1>
+			<span>Hotel Reservation System</span> Login
+		</h1>
+		</header>
+		<div class="form">
+			<form:form id="loginForm" modelAttribute="login"
+				action="processLogin" method="post">
+				<p class="contact">
+					<form:label path="email">Email id</form:label>
+				</p>
+				<form:input path="email" required="required" maxlength="50"></form:input>
+				<p class="contact">
+					<form:label path="password">Password</form:label>
+				</p>
+				<form:password path="password" required="required"  minlength="8" maxlength="30"></form:password>
+				<input class="buttom" value="Login" type="submit" />
+			</form:form>
+		</div>
+	</div>
 </body>
 </html>
