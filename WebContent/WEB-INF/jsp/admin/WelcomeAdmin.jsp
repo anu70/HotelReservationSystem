@@ -9,15 +9,29 @@
 <link rel="stylesheet" type="text/css" href="css/demo.css" />
 </head>
 <body>
-<div class="container"><header>
+	<div class="container">
+		<!-- freshdesignweb top bar -->
+		<div class="freshdesignweb-top">
+			<span class="right"> <a href="logout"> <strong>Logout </strong>
+			</a>
+			</span>
+			<div class="clr"></div>
+		</div>
+		<header>
 		<h1>
 			<span>Hotel Reservation System</span><br>Welcome ${username}
 		</h1>
 		</header>
-		<div class="freshdesignweb-demos"><a href="login">Add Hotel</a></div>
-		 <div class="freshdesignweb-demos"><a href="login">Delete Hotel</a></div>
-		 <div class="freshdesignweb-demos"><a href="login">Edit Hotel</a></div>
+		<div class="freshdesignweb-demos">
+			<a href="addHotel">Add Hotel</a>
+		</div>
+		<div class="freshdesignweb-demos">
+			<a href="login">Delete Hotel</a>
+		</div>
+		<div class="freshdesignweb-demos">
+			<a href="editHotel">Edit Hotel</a>
+		</div>
 	</div>
-	
+
 </body>
 </html>

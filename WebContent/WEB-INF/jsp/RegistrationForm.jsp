@@ -13,10 +13,8 @@
 	<div class="container">
 		<!-- freshdesignweb top bar -->
 		<div class="freshdesignweb-top">
-			<a href="home">Home</a>
-			</td>
-			</td> <span class="right"> <a href="login"> <strong>Already
-						registered? Login here. </strong>
+			<a href="home">Home</a> <span class="right"> <a href="login">
+					<strong>Already registered? Login here. </strong>
 			</a>
 			</span>
 			<div class="clr"></div>
@@ -29,11 +27,12 @@
 		<div class="form">
 			<form:form id="registrationForm" modelAttribute="user"
 				action="processRegistration" method="post">
-				<form:errors  />
+				<form:errors />
 				<p class="contact">
 					<form:label path="username">Username</form:label>
 				</p>
-				<form:input path="username" maxlength="20" minlength="3" required="required"></form:input>
+				<form:input path="username" maxlength="20" minlength="3"
+					required="required"></form:input>
 				<p class="contact">
 					<form:label path="role">Role</form:label>
 				</p>
@@ -44,12 +43,13 @@
 				<p class="contact">
 					<form:label path="email" maxlength="50">Email Id</form:label>
 				</p>
-				<form:input path="email" name="email" id="email" required="required" type="email"/>
+				<form:input path="email" name="email" id="email" required="required"
+					type="email" />
 				<p class="contact">
 					<form:label path="password">Password</form:label>
 				</p>
 				<form:password path="password" name="password" id="password"
-					required="required" minlength="8" maxlength="30"/>
+					required="required" minlength="8" maxlength="30" />
 				<p class="contact">
 					<form:label path="country">Country</form:label>
 				</p>

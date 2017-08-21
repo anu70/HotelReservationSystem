@@ -3,11 +3,13 @@ package com.cognizant.utils;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.cognizant.models.User;
+
 //Singleton class
 public class Global {
 	private static Global obj;
 	public static Map<String, String> rolesList,countriesList,citiesList;
-
+	public static User user;
 	private Global() {
 		rolesList = new LinkedHashMap<String, String>();
 		rolesList.put("customer", "Customer");
@@ -15,6 +17,9 @@ public class Global {
 		
 		loadCountires();
 		loadCities();
+	}
+	public void setUser(User user){
+		Global.user = user;
 	}
 	
 	public void loadCountires(){

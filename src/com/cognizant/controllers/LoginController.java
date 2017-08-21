@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.cognizant.DAO.UserDAO;
 import com.cognizant.models.Login;
 import com.cognizant.models.User;
+import com.cognizant.utils.Global;
 
 @Controller
 public class LoginController {
@@ -29,7 +30,9 @@ public class LoginController {
         	return "redirect:/login";
         }
         else{
-        	model.addAttribute("username",user.getUsername());
+        	Global.getInstance().setUser(user);
+        	Global.getInstance();
+			model.addAttribute("username",Global.user.getUsername());
         	if(user.getRole().equals("admin"))
         		return "admin/WelcomeAdmin";
         	else

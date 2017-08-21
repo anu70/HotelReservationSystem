@@ -6,6 +6,7 @@ public class Hotel {
 	String city;
 	String country;
 	String description;
+	String identifyHotel;
 	int acRoomsCount;
 	int nonACRoomsCount;
 	int rateChildAC;
@@ -27,6 +28,14 @@ public class Hotel {
 		this.rateAdultAC = rateAdultAC;
 		this.rateChildNonAC = rateChildNonAC;
 		this.rateAdultNonAC = rateAdultNonAC;
+		identifyHotel = hotelId +".."+hotelName +".."+city+".."+country;
+	}
+	
+	public String getIdentifyHotel() {
+		return identifyHotel;
+	}
+	public void setIdentifyHotel(String identifyHotel) {
+		this.identifyHotel = identifyHotel;
 	}
 	public String getHotelId() {
 		return hotelId;

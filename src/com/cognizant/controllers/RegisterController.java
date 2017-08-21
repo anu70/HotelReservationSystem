@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cognizant.DAO.UserDAO;
-import com.cognizant.models.Login;
 import com.cognizant.models.User;
 import com.cognizant.utils.Global;
 
