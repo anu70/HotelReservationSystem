@@ -13,7 +13,7 @@
 	<div class="container">
 		<!-- freshdesignweb top bar -->
 		<div class="freshdesignweb-top">
-			<a href="welcomeAdmin">Home</a> </a> </span><span class="right"> <a
+			<a href="welcomeAdmin">Welcome Screen</a> </a> </span><span class="right"> <a
 				href="logout"> <strong>Logout</strong>
 			</a>
 			</span>

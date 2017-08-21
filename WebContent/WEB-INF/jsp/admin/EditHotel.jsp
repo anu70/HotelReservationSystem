@@ -13,7 +13,7 @@
 	<div class="container">
 		<!-- freshdesignweb top bar -->
 		<div class="freshdesignweb-top">
-			<a href="welcomeAdmin">Home</a> </a> </span>
+			<a href="welcomeAdmin">Welcome Screen</a> </a> </span>
 			<div class="clr"></div>
 		</div>
 		<header>
@@ -28,7 +28,7 @@
 					<form:label path="hotelId">Hotel Id</form:label>
 				</p>
 				<form:select class="select-style" path="identifyHotel"
-					items="${hotelIds}" cssStyle="width:420px"></form:select>
+					items="${hotelIds}" cssStyle="width:420px" required="required"></form:select>
 				<br>
 				<br>
 				<p class="contact">

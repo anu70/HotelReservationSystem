@@ -26,7 +26,7 @@
 			<a href="addHotel">Add Hotel</a>
 		</div>
 		<div class="freshdesignweb-demos">
-			<a href="login">Delete Hotel</a>
+			<a href="deleteHotel">Delete Hotel</a>
 		</div>
 		<div class="freshdesignweb-demos">
 			<a href="editHotel">Edit Hotel</a>

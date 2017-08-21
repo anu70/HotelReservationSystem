@@ -81,4 +81,12 @@ public class AdminDAOImpl implements AdminDAO {
 						hotel.getRateChildNonAC(), hotel.getDescription(), hotel.getHotelId() });
 		return returnValue;
 	}
+
+	@Override
+	public int deleteHotel(Hotel hotel) {
+		String sql = "DELETE from Hotel WHERE hotel_id=?";
+		int returnValue = getJdbcTemplate().update(sql,
+				new Object[] {hotel.getHotelId()});
+		return returnValue;
+	}
 }

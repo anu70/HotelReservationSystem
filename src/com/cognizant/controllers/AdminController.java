@@ -20,6 +20,12 @@ public class AdminController {
 	AdminDAO adminDAO;
 	@RequestMapping(value="/addHotel",method=RequestMethod.GET)
 	public String showAddHotelPage(ModelMap model){
+		Global.getInstance();
+		if(Global.user==null){
+			return "redirect:/login";
+		}
+		if(!Global.user.getRole().equals("admin"))
+			return "NotAuthorized";
 		model.addAttribute("hotel",new Hotel());
 		Global.getInstance();
 		model.addAttribute("citiesList",Global.citiesList);
@@ -36,12 +42,20 @@ public class AdminController {
 	    		return "admin/WelcomeAdmin";
 	        }
 	        else{
-	        	return "redirect:/admin/AddHotel";
+	        	return "redirect:/addHotel";
 	        }
 	}
 	
 	@RequestMapping(value="/editHotel",method=RequestMethod.GET)
 	public String showEditHotelPage(ModelMap model){
+		Global.getInstance();
+		if(Global.user==null){
+			return "redirect:/login";
+		}
+		
+		if(!Global.user.getRole().equals("admin"))
+			return "NotAuthorized";
+			
 		List<String> hotelIds = new ArrayList<String>();
 		for(int i=0;i<adminDAO.getAllHotels().size();i++)
 			hotelIds.add(adminDAO.getAllHotels().get(i).getIdentifyHotel());
@@ -60,7 +74,39 @@ public class AdminController {
 	    		return "admin/WelcomeAdmin";
 	        }
 	        else{
-	        	return "redirect:/admin/EditHotel";
+	        	return "redirect:/editHotel";
+	        }
+	}
+	
+	@RequestMapping(value="/deleteHotel",method=RequestMethod.GET)
+	public String showDeleteHotelPage(ModelMap model){
+		Global.getInstance();
+		if(Global.user==null){
+			return "redirect:/login";
+		}
+		
+		if(!Global.user.getRole().equals("admin"))
+			return "NotAuthorized";
+			
+		List<String> hotelIds = new ArrayList<String>();
+		for(int i=0;i<adminDAO.getAllHotels().size();i++)
+			hotelIds.add(adminDAO.getAllHotels().get(i).getIdentifyHotel());
+		model.addAttribute("hotel",new Hotel());
+		model.addAttribute("hotelIds",hotelIds);
+		return "admin/DeleteHotel";
+	}
+	
+	@RequestMapping(value="/processDeleteHotel",method = RequestMethod.POST)
+	public String processDeleteHotel(@ModelAttribute("hotel")Hotel hotel ,ModelMap model){
+		hotel.setHotelId(hotel.getIdentifyHotel().split("\\..")[0]);
+		 int errorCode = adminDAO.deleteHotel(hotel);
+	        if(errorCode==1){
+	        	Global.getInstance();
+				model.addAttribute("username",Global.user.getUsername());
+	    		return "admin/WelcomeAdmin";
+	        }
+	        else{
+	        	return "redirect:/deleteHotel";
 	        }
 	}
 }

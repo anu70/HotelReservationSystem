@@ -7,5 +7,6 @@ import com.cognizant.models.Hotel;
 public interface AdminDAO {
 	int addHotel(Hotel hotel);
 	int editHotel(Hotel hotel);
+	int deleteHotel(Hotel hotel);
 	ArrayList<Hotel> getAllHotels();
 }
