@@ -15,7 +15,7 @@
 		<!-- freshdesignweb top bar -->
 		<div class="freshdesignweb-top">
 			<a href="home">Home</a>
-			</td> <span class="right"> <a href="register"> <strong>Register
+			 <span class="right"> <a href="register"> <strong>Register
 						here</strong>
 			</a>
 			</span>
@@ -40,6 +40,7 @@
 				<input class="buttom" value="Login" type="submit" />
 			</form:form>
 		</div>
+		<h4><span style="color:red">${message}</span></h4>
 	</div>
 </body>
 </html>

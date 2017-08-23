@@ -10,6 +10,10 @@
 </head>
 <body>
 <div class="container">
+<div class="freshdesignweb-top">
+			<a href="welcomeCustomer">Welcome Screen</a> </a> </span>
+			<div class="clr"></div>
+		</div>
 		<header>
 		<h1>
 			<span>You don't have the admin rights.This operation requires admin rights.</span>

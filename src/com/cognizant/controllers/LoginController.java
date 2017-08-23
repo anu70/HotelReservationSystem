@@ -27,7 +27,9 @@ public class LoginController {
 	public String processLogin(@ModelAttribute("login")Login login,ModelMap model){
         User user = userDAO.validateUser(login);
         if(user==null){
-        	return "redirect:/login";
+        	model.addAttribute("message", "The username or password is incorrect.");
+        	model.addAttribute("login",new Login("",""));
+        	return "LoginForm";
         }
         else{
         	Global.getInstance().setUser(user);
@@ -36,7 +38,7 @@ public class LoginController {
         	if(user.getRole().equals("admin"))
         		return "admin/WelcomeAdmin";
         	else
-        		return "customer/WelcomeCustomer";
+        		return "redirect:/welcomeCustomer";
         }
 		
 	}

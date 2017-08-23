@@ -62,7 +62,6 @@ public class AdminDAOImpl implements AdminDAO {
 			return hotel;
 
 		}
-
 	}
 
 	@Override
