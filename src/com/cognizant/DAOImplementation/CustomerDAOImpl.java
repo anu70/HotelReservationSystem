@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cognizant.DAO.CustomerDAO;
 import com.cognizant.models.Hotel;
+import com.cognizant.models.HotelsList;
 import com.cognizant.models.Trip;
 
 @Repository("customerDAO")
@@ -24,11 +25,11 @@ public class CustomerDAOImpl implements CustomerDAO{
 	}
 
 	@Override
-	public ArrayList<Hotel> getAllAvailableHotels(Trip trip) {
+	public HotelsList getAllAvailableHotels(Trip trip) {
 		// TODO : ADD FILTER
 		String sql = "SELECT * FROM Hotel";
 		List<Hotel> hotels = getJdbcTemplate().query(sql, new Object[] {}, new HotelMapper());
-		return (ArrayList<Hotel>) hotels;
+		return new HotelsList((ArrayList<Hotel>) hotels);
 	}
 	
 	class HotelMapper implements RowMapper<Hotel> {

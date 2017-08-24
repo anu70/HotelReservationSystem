@@ -23,25 +23,21 @@
 		</h1>
 		</header>
 
-		<c:if test="${not empty lists}">
-
-			<ul>
-				<c:forEach var="listValue" items="${lists}">
-					<li><div class="container">
-							<div class="form">
-								<form:form id="hotelDetailsRow" modelAttribute="listValue"
-									action="welcomeCustomer" method="get">
-									<h4>${listValue.hotelName}</h4>
-									<h4>${listValue.city},${listValue.country}</h4><br>
-									<input class="buttom" value="Book Now" type="submit" />
-								</form:form>
-							</div>
-						</div><br></li>
-				</c:forEach>
-			</ul>
-
-		</c:if>
-	</div>
+		<form:form id="availableHotelsForm" modelAttribute="hotelsList"
+			action="bookHotel" method="post">
+			 <c:forEach items="${hotelsList.hotelList}" var="items"
+				varStatus="status">
+				<div class="form">
+					<p class="contact">
+						<form:label path="hotelList[${status.index}].hotelName">${items.hotelName}</form:label>
+					</p>
+					<input class="buttom" type="submit" name="action" value="${status.index}"/>
+				</div>
+				<br>
+			</c:forEach> 
+			
+		</form:form>
+	</div> 
 
 </body>
 

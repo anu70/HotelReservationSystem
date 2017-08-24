@@ -1,16 +1,16 @@
 package com.cognizant.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cognizant.DAO.CustomerDAO;
 import com.cognizant.models.Hotel;
+import com.cognizant.models.HotelsList;
 import com.cognizant.models.Trip;
 import com.cognizant.utils.Global;
 
@@ -18,24 +18,32 @@ import com.cognizant.utils.Global;
 public class CustomerController {
 	@Autowired
 	CustomerDAO customerDAO;
-	@RequestMapping(value="/welcomeCustomer",method = RequestMethod.GET)
-	public String showSearchPage(ModelMap model){
+
+	@RequestMapping(value = "/welcomeCustomer", method = RequestMethod.GET)
+	public String showSearchPage(ModelMap model) {
 		Global.getInstance();
-		if(Global.user==null){
+		if (Global.user == null) {
 			return "redirect:/login";
-		}		
-		model.addAttribute("trip",new Trip());
-		model.addAttribute("username",Global.user.getUsername());
-		model.addAttribute("citiesList",Global.citiesList);
+		}
+		model.addAttribute("trip", new Trip());
+		model.addAttribute("username", Global.user.getUsername());
+		model.addAttribute("citiesList", Global.citiesList);
 		model.addAttribute("countriesList", Global.countriesList);
 		return "customer/WelcomeCustomer";
 	}
-	
+
 	@RequestMapping(value="/availableHotels",method = RequestMethod.POST)
 	public String processSearch(@ModelAttribute("trip")Trip trip,ModelMap model){
 		System.out.println(trip.getStartDate());
-		List<Hotel> hotels = customerDAO.getAllAvailableHotels(trip);
-		model.addAttribute("lists",hotels);
+		model.addAttribute("hotelsList",customerDAO.getAllAvailableHotels(trip));
 		return "customer/AvailableHotels";
+	}
+
+	@RequestMapping(value="/bookHotel",method=RequestMethod.POST)
+	public String bookHotel(@ModelAttribute("hotelsList")HotelsList hotelsList, @RequestParam(value="action", required=true) String action,ModelMap model){
+		System.out.println(action);
+		Hotel h = hotelsList.getHotelList().get(0);
+		model.addAttribute("hotelName",h.getHotelName());
+		return "customer/BookHotel";
 	}
 }
