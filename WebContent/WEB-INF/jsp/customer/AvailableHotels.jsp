@@ -14,7 +14,8 @@
 	<div class="container">
 		<!-- freshdesignweb top bar -->
 		<div class="freshdesignweb-top">
-			<a href="welcomeCustomer">Welcome Screen</a> </a> </span>
+			<span> <a href="welcomeCustomer">Welcome Screen</a>
+			</span>
 			<div class="clr"></div>
 		</div>
 		<header>
@@ -22,22 +23,46 @@
 			<span>Hotel Reservation System</span> Available Hotels
 		</h1>
 		</header>
-
-		<form:form id="availableHotelsForm" modelAttribute="hotelsList"
-			action="bookHotel" method="post">
-			 <c:forEach items="${hotelsList.hotelList}" var="items"
-				varStatus="status">
-				<div class="form">
+		<c:forEach items="${hotelsList.hotelList}" var="items"
+			varStatus="status">
+			<div class="form">
+				<form:form id="availableHotelsForm" modelAttribute="hotel"
+					action="bookHotel" method="post">
+					<form:hidden path="hotelName" value="${items.hotelName}"/>
+					<form:hidden path="rateAdultAC" value="${items.rateAdultAC}"/>
+					<form:hidden path="rateChildAC" value="${items.rateChildAC}"/>
+					<form:hidden path="rateAdultAC" value="${items.rateAdultAC}"/>
+					<form:hidden path="rateChildNonAC" value="${items.rateChildNonAC}"/>
+					<form:hidden path="rateAdultNonAC" value="${items.rateAdultNonAC}"/>
+					<form:hidden path="description" value="${items.description}"/>
+					<form:hidden path="country" value="${items.country}"/>
+					<form:hidden path="city" value="${items.city}"/>
+					<form:hidden path="hotelId" value="${items.hotelId}"/>
 					<p class="contact">
-						<form:label path="hotelList[${status.index}].hotelName">${items.hotelName}</form:label>
+						<form:label path="hotelName">${items.hotelName}</form:label>
 					</p>
-					<input class="buttom" type="submit" name="action" value="${status.index}"/>
-				</div>
-				<br>
-			</c:forEach> 
-			
-		</form:form>
-	</div> 
+					<form:label path="city">${items.city},</form:label>
+					<form:label path="country">${items.country}</form:label><br><br>
+
+
+					<c:choose>
+						<c:when test="${availableHotels[status.index]}">
+							<input class="buttom" type="submit" name="action"
+								value="Book Now" />
+						</c:when>
+						<c:otherwise>
+							<input class="button_deactivated" type="submit" name="action"
+								value="Book Now" disabled="true" />
+						</c:otherwise>
+					</c:choose>
+				</form:form>
+			</div>
+			<br>
+
+		</c:forEach>
+
+
+	</div>
 
 </body>
 

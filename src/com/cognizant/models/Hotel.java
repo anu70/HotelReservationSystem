@@ -1,6 +1,7 @@
 package com.cognizant.models;
 
 public class Hotel {
+	int hotelUniqueId;
 	String hotelId;
 	String hotelName;
 	String city;
@@ -14,23 +15,34 @@ public class Hotel {
 	int rateChildNonAC;
 	int rateAdultNonAC;
 	public Hotel(){}
-	public Hotel(String hotelId, String hotelName, String city, String country, String description, int acRoomsCount,
-			int nonACRoomsCount, int rateChildAC, int rateAdultAC, int rateChildNonAC, int rateAdultNonAC) {
+	
+	public Hotel(int hotelUniqueId, String hotelId, String hotelName, String city, String country, String description,
+			String identifyHotel, int acRoomsCount, int nonACRoomsCount, int rateChildAC, int rateAdultAC,
+			int rateChildNonAC, int rateAdultNonAC) {
 		super();
+		this.hotelUniqueId = hotelUniqueId;
 		this.hotelId = hotelId;
 		this.hotelName = hotelName;
 		this.city = city;
 		this.country = country;
 		this.description = description;
+		this.identifyHotel = identifyHotel;
 		this.acRoomsCount = acRoomsCount;
 		this.nonACRoomsCount = nonACRoomsCount;
 		this.rateChildAC = rateChildAC;
 		this.rateAdultAC = rateAdultAC;
 		this.rateChildNonAC = rateChildNonAC;
 		this.rateAdultNonAC = rateAdultNonAC;
-		identifyHotel = hotelId +".."+hotelName +".."+city+".."+country;
 	}
-	
+
+	public int getHotelUniqueId() {
+		return hotelUniqueId;
+	}
+
+	public void setHotelUniqueId(int hotelUniqueId) {
+		this.hotelUniqueId = hotelUniqueId;
+	}
+
 	public String getIdentifyHotel() {
 		return identifyHotel;
 	}
