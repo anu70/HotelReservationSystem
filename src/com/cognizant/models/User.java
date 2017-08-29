@@ -2,6 +2,7 @@ package com.cognizant.models;
 
 
 public class User {
+	int id;
 	String username;
 	String role;
 	String email;
@@ -15,9 +16,11 @@ public class User {
 	public User(){}
 	
 	
-	public User(String username, String role, String email, String password, String dob, String country, String city,
-			String mobile, String pincode) {
+	
+	public User(int id, String username, String role, String email, String password, String dob, String country,
+			String city, String mobile, String pincode) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.role = role;
 		this.email = email;
@@ -28,6 +31,21 @@ public class User {
 		this.mobile = mobile;
 		this.pincode = pincode;
 	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
 	public String getUsername() {
 		return username;
 	}

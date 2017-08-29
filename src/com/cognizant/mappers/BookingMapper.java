@@ -22,6 +22,7 @@ public class BookingMapper implements RowMapper<Booking>{
 		booking.setBooking_date(result.getString("booking_date"));
 		booking.setStart_date(result.getString("start_date"));
 		booking.setEnd_date(result.getString("end_date"));
+		booking.setTotal_cost(result.getInt("total_cost"));
 		return booking;
 	}
 

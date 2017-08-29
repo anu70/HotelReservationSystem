@@ -63,6 +63,15 @@
 				<form:input path="atm_pin" required="required" type="text"
 					onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 					minlength="6" maxlength="6" />
+				<br>
+				<p class="contact">
+					<form:label path="account_no">Account No.</form:label>
+				</p>
+				<form:input path="account_no" required="required" type="text"
+					onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+					minlength="10" maxlength="10" /><br>
+				Are you a senior citizen? <form:checkbox path="is_senior_citizen" />
+				<br>
 
 				<input class="buttom" value="Pay" type="submit" />
 			</form:form>

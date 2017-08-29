@@ -27,6 +27,8 @@ public class CustomerController {
 	public String showSearchPage(ModelMap model) {
 		Global.getInstance();
 		Global.getInstance().setBooking(null);
+		Global.getInstance().setHotel(null);
+		Global.getInstance().setTrip(null);
 		if (Global.user == null) {
 			return "redirect:/login";
 		}
@@ -70,7 +72,6 @@ public class CustomerController {
 
 	@RequestMapping(value = "/reviewBooking", method = RequestMethod.POST)
 	public String reviewBooking(@ModelAttribute("booking") Booking booking, ModelMap model) {
-		model.addAttribute("booking", booking);
 		Global.getInstance();
 		if (Global.user != null) {
 			model.addAttribute("user", Global.user);
@@ -92,8 +93,26 @@ public class CustomerController {
 				+ booking.getNon_ac_rooms_count() * Global.hotel.getRateAdultNonAC();
 		model.addAttribute("totalCost", totalCost);
 		
+		booking.setUser_id(Global.user.getId());
+		booking.setHotel_id(Global.hotel.getHotelUniqueId());
+		booking.setBooking_date("2017/08/29");
+		booking.setAdults_count(Global.trip.getAdultCount());
+		booking.setChild_count(Global.trip.getChildCount());
+		booking.setStart_date(Global.trip.getStartDate());
+		booking.setEnd_date(Global.trip.getEndDate());
+		booking.setTotal_cost(totalCost);
 		Global.getInstance().setBooking(booking);
+		model.addAttribute("booking", booking);
 		return "customer/ReviewBooking";
+	}
+	
+	@RequestMapping(value = "/allBookings", method = RequestMethod.GET)
+	public String allBookings(ModelMap model){
+		if(Global.user==null)
+			return "redirect:/login";
+		ArrayList<Booking> bookings = customerDAO.getAllBookings(Global.user);
+		model.addAttribute("bookingsList", bookings);
+		return "customer/AllBookings";
 	}
 	
 	@RequestMapping(value="/makePayment",method=RequestMethod.POST)
@@ -106,10 +125,17 @@ public class CustomerController {
 	
 	@RequestMapping(value="/bookingSuccessful",method=RequestMethod.POST)
 	public String bookingSuccessful(@ModelAttribute("payment") Payment payment,ModelMap model){
+		if (Global.user != null) {
+			payment.setUser_id(Global.user.getId());
+			payment.setStatus(0);
+		} else {
+			return "redirect:/login";
+		}
 		int bookingId = customerDAO.bookHotel(Global.booking);
 		int transactionId = customerDAO.makePayment(payment);
 		Global.getInstance();
-		model.addAttribute("BookingId",Global.booking.getId());
+		model.addAttribute("BookingId",bookingId);
+		model.addAttribute("TransactionId",transactionId);
 		return "customer/BookingSuccessful";
 	}
 	

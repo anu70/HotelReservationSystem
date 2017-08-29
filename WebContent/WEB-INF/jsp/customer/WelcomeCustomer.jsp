@@ -14,6 +14,11 @@
 	<div class="container">
 		<!-- freshdesignweb top bar -->
 		<div class="freshdesignweb-top">
+			<span> <a href="allBookings">All Bookings</a>
+			</span>
+			<div class="clr"></div>
+		</div>
+		<div class="freshdesignweb-top">
 			<span class="right"> <a href="logout"> <strong>Logout
 				</strong>
 			</a>

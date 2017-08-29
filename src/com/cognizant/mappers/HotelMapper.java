@@ -11,6 +11,7 @@ public class HotelMapper implements RowMapper<Hotel> {
 	@Override
 	public Hotel mapRow(ResultSet result, int arg1) throws SQLException {
 		Hotel hotel = new Hotel();
+		hotel.setHotelUniqueId(result.getInt("hotel_unique_id"));
 		hotel.setHotelId(result.getString("hotel_id"));
 		hotel.setHotelName(result.getString("name"));
 		hotel.setCity(result.getString("city"));

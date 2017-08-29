@@ -28,6 +28,7 @@
 			<div class="form">
 				<form:form id="availableHotelsForm" modelAttribute="hotel"
 					action="bookHotel" method="post">
+					<form:hidden path="hotelUniqueId" value="${items.hotelUniqueId}"/>
 					<form:hidden path="hotelName" value="${items.hotelName}"/>
 					<form:hidden path="rateAdultAC" value="${items.rateAdultAC}"/>
 					<form:hidden path="rateChildAC" value="${items.rateChildAC}"/>
@@ -43,8 +44,7 @@
 					</p>
 					<form:label path="city">${items.city},</form:label>
 					<form:label path="country">${items.country}</form:label><br><br>
-
-
+					
 					<c:choose>
 						<c:when test="${availableHotels[status.index]}">
 							<input class="buttom" type="submit" name="action"

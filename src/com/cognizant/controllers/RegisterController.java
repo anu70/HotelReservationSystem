@@ -19,7 +19,7 @@ public class RegisterController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegistrationForm(ModelMap model) {
-		model.addAttribute("user", new User("", "", "", "", "", "", "", "", ""));	
+		model.addAttribute("user", new User());	
 		Global.getInstance();
 		model.addAttribute("rolesList",Global.rolesList);
 		model.addAttribute("citiesList",Global.citiesList);

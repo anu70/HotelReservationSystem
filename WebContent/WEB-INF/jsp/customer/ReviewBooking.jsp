@@ -25,7 +25,7 @@
 			<form:form id="reviewBookingPage" modelAttribute="booking"
 				action="makePayment" method="post">
 				<h2>You are booking: ${hotel.hotelName} 
-				<a href="welcomeCustomer"> <img src="css/images/edit_icon.png" width="30px" height="30px"/></a> </h2><br>
+				<a href="bookHotel"> <img src="css/images/edit_icon.png" width="30px" height="30px"/></a> </h2><br>
 
 				<h2>Total AC Rooms: ${booking.ac_rooms_count}</h2><br>
 

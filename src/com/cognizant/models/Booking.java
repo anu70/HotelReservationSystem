@@ -11,13 +11,12 @@ public class Booking {
 	int child_count;
 	int ac_rooms_count;
 	int non_ac_rooms_count;
+	int total_cost;
 	
 	public Booking(){}
 	
-	
-
 	public Booking(int id, int hotel_id, int user_id, String booking_date, String start_date, String end_date,
-			int adults_count, int child_count, int ac_rooms_count, int non_ac_rooms_count) {
+			int adults_count, int child_count, int ac_rooms_count, int non_ac_rooms_count, int total_cost) {
 		super();
 		this.id = id;
 		this.hotel_id = hotel_id;
@@ -29,9 +28,8 @@ public class Booking {
 		this.child_count = child_count;
 		this.ac_rooms_count = ac_rooms_count;
 		this.non_ac_rooms_count = non_ac_rooms_count;
+		this.total_cost = total_cost;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -39,31 +37,20 @@ public class Booking {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
-	
 	public int getUser_id() {
 		return user_id;
 	}
 
-
-
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
-
-
 	public int getHotel_id() {
 		return hotel_id;
 	}
 
-
-
 	public void setHotel_id(int hotel_id) {
 		this.hotel_id = hotel_id;
 	}
-
-
 
 	public String getBooking_date() {
 		return booking_date;
@@ -107,4 +94,13 @@ public class Booking {
 	public void setNon_ac_rooms_count(int non_ac_rooms_count) {
 		this.non_ac_rooms_count = non_ac_rooms_count;
 	}
+
+	public int getTotal_cost() {
+		return total_cost;
+	}
+
+	public void setTotal_cost(int total_cost) {
+		this.total_cost = total_cost;
+	}
+	
 }
