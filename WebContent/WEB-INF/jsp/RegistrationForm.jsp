@@ -8,10 +8,13 @@
 <title>Registration</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <link rel="stylesheet" type="text/css" href="css/demo.css" />
+
+<script type="text/javascript"
+	src="<c:url value="/resources/jquery/1.6/jquery-1.6.1.min.js" />"></script>
 </head>
 <body>
 	<div class="container">
-		<!-- freshdesignweb top bar -->
+		<!-- freshdesignweb top bar -->S
 		<div class="freshdesignweb-top">
 			<a href="home">Home</a> <span class="right"> <a href="login">
 					<strong>Already registered? Login here. </strong>

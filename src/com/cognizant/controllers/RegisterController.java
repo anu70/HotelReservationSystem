@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cognizant.DAO.StaticDataDAO;
 import com.cognizant.DAO.UserDAO;
 import com.cognizant.models.User;
 import com.cognizant.utils.Global;
@@ -16,14 +17,18 @@ import com.cognizant.utils.Global;
 public class RegisterController {
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	StaticDataDAO staticDataDAO;
+	
+
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegistrationForm(ModelMap model) {
-		model.addAttribute("user", new User());	
 		Global.getInstance();
+		model.addAttribute("user", new User());	
 		model.addAttribute("rolesList",Global.rolesList);
-		model.addAttribute("citiesList",Global.citiesList);
-		model.addAttribute("countriesList", Global.countriesList);
+		model.addAttribute("countriesList",staticDataDAO.getCountriesList());
+		model.addAttribute("citiesList",staticDataDAO.getCitiesList());
 		return "RegistrationForm";                                                                                                                                                                                                                    
 	}
 	
