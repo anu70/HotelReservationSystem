@@ -26,7 +26,7 @@ public class AdminDAOImpl implements AdminDAO {
 		if (alreadyexist(hotel))
 			return 2;
 		int returnValue = getJdbcTemplate().update(sql,
-				new Object[] { hotel.getHotelId(), hotel.getHotelName(), hotel.getCountry(), hotel.getCity(),
+				new Object[] { hotel.getHotelId(), hotel.getHotelName(), hotel.getCountryId(), hotel.getCityId(),
 						hotel.getAcRoomsCount(), hotel.getNonACRoomsCount(), hotel.getRateAdultAC(),
 						hotel.getRateChildAC(), hotel.getRateAdultNonAC(), hotel.getRateChildNonAC(),
 						hotel.getDescription() });

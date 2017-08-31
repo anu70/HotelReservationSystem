@@ -4,8 +4,8 @@ public class Hotel {
 	int hotelUniqueId;
 	String hotelId;
 	String hotelName;
-	String city;
-	String country;
+	int cityId;
+	int countryId;
 	String description;
 	String identifyHotel;
 	int acRoomsCount;
@@ -16,15 +16,16 @@ public class Hotel {
 	int rateAdultNonAC;
 	public Hotel(){}
 	
-	public Hotel(int hotelUniqueId, String hotelId, String hotelName, String city, String country, String description,
+
+	public Hotel(int hotelUniqueId, String hotelId, String hotelName, int cityId, int countryId, String description,
 			String identifyHotel, int acRoomsCount, int nonACRoomsCount, int rateChildAC, int rateAdultAC,
 			int rateChildNonAC, int rateAdultNonAC) {
 		super();
 		this.hotelUniqueId = hotelUniqueId;
 		this.hotelId = hotelId;
 		this.hotelName = hotelName;
-		this.city = city;
-		this.country = country;
+		this.cityId = cityId;
+		this.countryId = countryId;
 		this.description = description;
 		this.identifyHotel = identifyHotel;
 		this.acRoomsCount = acRoomsCount;
@@ -34,6 +35,7 @@ public class Hotel {
 		this.rateChildNonAC = rateChildNonAC;
 		this.rateAdultNonAC = rateAdultNonAC;
 	}
+
 
 	public int getHotelUniqueId() {
 		return hotelUniqueId;
@@ -61,18 +63,29 @@ public class Hotel {
 	public void setHotelName(String hotelName) {
 		this.hotelName = hotelName;
 	}
-	public String getCity() {
-		return city;
+	
+
+	public int getCountryId() {
+		return countryId;
 	}
-	public void setCity(String city) {
-		this.city = city;
+
+
+
+	public void setCountryId(int countryId) {
+		this.countryId = countryId;
 	}
-	public String getCountry() {
-		return country;
+
+
+	public int getCityId() {
+		return cityId;
 	}
-	public void setCountry(String country) {
-		this.country = country;
+
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
+
+
 	public String getDescription() {
 		return description;
 	}

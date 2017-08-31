@@ -14,8 +14,8 @@ public class HotelMapper implements RowMapper<Hotel> {
 		hotel.setHotelUniqueId(result.getInt("hotel_unique_id"));
 		hotel.setHotelId(result.getString("hotel_id"));
 		hotel.setHotelName(result.getString("name"));
-		hotel.setCity(result.getString("city"));
-		hotel.setCountry(result.getString("country"));
+		hotel.setCityId(result.getInt("city"));
+		hotel.setCountryId(result.getInt("country"));
 		hotel.setAcRoomsCount(result.getInt("ac_rooms"));
 		hotel.setNonACRoomsCount(result.getInt("non_ac_rooms"));
 		hotel.setRateAdultAC(result.getInt("adult_ac_rate"));

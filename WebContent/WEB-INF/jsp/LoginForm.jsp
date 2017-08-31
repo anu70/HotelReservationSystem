@@ -39,8 +39,8 @@
 				<form:password path="password" required="required"  minlength="8" maxlength="30"></form:password>
 				<input class="buttom" value="Login" type="submit" />
 			</form:form>
+			<h4><span style="color:red">${message}</span></h4><br>
 		</div>
-		<h4><span style="color:red">${message}</span></h4>
 	</div>
 </body>
 </html>

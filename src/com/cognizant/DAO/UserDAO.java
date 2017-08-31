@@ -6,4 +6,5 @@ import com.cognizant.models.User;
 public interface UserDAO {
 	int register(User user);
 	User validateUser(Login login);
+	boolean adminAlreadyExist();
 }

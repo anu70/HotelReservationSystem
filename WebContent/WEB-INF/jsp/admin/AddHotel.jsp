@@ -13,8 +13,8 @@
 	<div class="container">
 		<!-- freshdesignweb top bar -->
 		<div class="freshdesignweb-top">
-			<a href="welcomeAdmin">Welcome Screen</a> </a> </span><span class="right"> <a
-				href="logout"> <strong>Logout</strong>
+			<a href="welcomeAdmin">Welcome Screen</a> </a> </span><span class="right">
+				<a href="logout"> <strong>Logout</strong>
 			</a>
 			</span>
 			<div class="clr"></div>
@@ -25,6 +25,9 @@
 		</h1>
 		</header>
 		<div class="form">
+			<h4>
+				<span style="color: red">${message}</span><br> <br>
+			</h4>
 			<form:form id="AddHotelPage" modelAttribute="hotel"
 				action="processAddHotel" method="post">
 				<p class="contact">
@@ -37,16 +40,19 @@
 				</p>
 				<form:input path="hotelName" required="required" maxlength="20"></form:input>
 				<p class="contact">
-					<form:label path="country">Country</form:label>
+					<form:label path="countryId">Country</form:label>
 				</p>
-				<form:select class="select-style" path="country"
-					items="${countriesList}" cssStyle="width:420px"></form:select>
+				<form:select class="select-style" path="countryId"
+					items="${countriesList}" itemValue="id" itemLabel="name"
+					cssStyle="width:420px" onchange="this.form.submit()" name="countrySelector"
+					></form:select>
 				<br>
 				<br>
 				<p class="contact">
-					<form:label path="city">City</form:label>
+					<form:label path="cityId">City</form:label>
 				</p>
-				<form:select class="select-style" path="city" items="${citiesList}"
+				<form:select class="select-style" path="cityId"
+					items="${citiesList}" itemValue="id" itemLabel="name"
 					cssStyle="width:420px"></form:select>
 				<br>
 				<br>
@@ -66,22 +72,29 @@
 				<p class="contact">
 					<form:label path="rateAdultAC">AC Room rate</form:label>
 				</p>
-				<form:input path="rateChildAC" required="required"></form:input>
-				<form:input path="rateAdultAC" required="required"></form:input>
+				<form:label path="rateAdultAC">Adult: </form:label>
+				<form:input path="rateAdultAC" required="required"
+					cssStyle="width:80px"></form:input>
+				<form:label path="rateChildAC">Child: </form:label>
+				<form:input path="rateChildAC" required="required"
+					cssStyle="width:80px"></form:input>
 
 				<p class="contact">
 					<form:label path="rateAdultNonAC">Non-AC Room rate</form:label>
 				</p>
-				<form:input path="rateChildNonAC" required="required"
-					placeholder="child"></form:input>
+				<form:label path="rateAdultNonAC">Adult: </form:label>
 				<form:input path="rateAdultNonAC" required="required"
-					placeholder="adult"></form:input>
+					cssStyle="width:80px"></form:input>
+				<form:label path="rateChildNonAC">Child: </form:label>
+				<form:input path="rateChildNonAC" required="required"
+					cssStyle="width:80px"></form:input>
+
 
 				<p class="contact">
 					<form:label path="description">Description</form:label>
 				</p>
 				<form:input path="description" maxlength="150"></form:input>
-				<input class="buttom" value="Add Hotel" type="submit" />
+				<input class="buttom" value="Add Hotel" type="submit" name="submitButton"/>
 			</form:form>
 		</div>
 	</div>

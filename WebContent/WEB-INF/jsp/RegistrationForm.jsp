@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div class="container">
-		<!-- freshdesignweb top bar -->S
+		<!-- freshdesignweb top bar -->
 		<div class="freshdesignweb-top">
 			<a href="home">Home</a> <span class="right"> <a href="login">
 					<strong>Already registered? Login here. </strong>
@@ -27,7 +27,11 @@
 			<span>Hotel Reservation System</span> Registration Form
 		</h1>
 		</header>
+		
 		<div class="form">
+		<h4>
+			<span style="color: red">${message}</span><br><br>
+		</h4>
 			<form:form id="registrationForm" modelAttribute="user"
 				action="processRegistration" method="post">
 				<form:errors />
@@ -87,7 +91,7 @@
 
 			</form:form>
 		</div>
-
+		
 	</div>
 
 </body>

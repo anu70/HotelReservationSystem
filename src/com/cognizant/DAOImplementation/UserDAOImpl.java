@@ -45,6 +45,12 @@ public class UserDAOImpl implements UserDAO {
 		List<User> users = getJdbcTemplate().query(sql, new Object[] { user.getEmail() }, new UserMapper());
 		return users.size() > 0 ? true:false;
 	}
+	
+	public boolean adminAlreadyExist(){
+		String sql = "SELECT * from User where role=?";
+		List<User> users = getJdbcTemplate().query(sql, new Object[] { "admin" }, new UserMapper());
+		return users.size() > 0 ? true:false;
+	}
 
 	
 }

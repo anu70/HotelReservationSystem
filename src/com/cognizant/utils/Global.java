@@ -1,33 +1,32 @@
 package com.cognizant.utils;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.cognizant.models.Booking;
+import com.cognizant.models.City;
+import com.cognizant.models.Country;
 import com.cognizant.models.Hotel;
 import com.cognizant.models.Trip;
 import com.cognizant.models.User;
 
-/*@Service
-@Scope("prototype")*/
-public class Global {
-	/*@Autowired
-	StaticDataDAO staticDataDAO;*/
 
+public class Global {
 	private static Global obj;
-	//public static ArrayList<Country> countriesList;
-	//public static ArrayList<City> citiesList;
+	public static ArrayList<Country> countriesList;
+	public static ArrayList<City> citiesList;
 	public static Map<String, String> rolesList, cardTypes;
 	public static User user;
 	public static Trip trip;
 	public static Hotel hotel;
 	public static Booking booking;
-
+	
 	public Global() {
 		rolesList = new LinkedHashMap<String, String>();
 		rolesList.put("customer", "Customer");
 		rolesList.put("admin", "Admin");
-
+	
 		//loadCountires();
 		//loadCities();
 		loadCreditCards();
@@ -50,13 +49,13 @@ public class Global {
 	}
 
 	/*public void loadCountires() {
-		// countriesList = new ArrayList<Country>();
-		countriesList = staticDataDAO.getCountriesList();
+		if(countriesList==null)
+			countriesList = dataLoader.getCountryList();
 	}
 
 	public void loadCities() {
-		citiesList = new ArrayList<City>();
-		// citiesList = staticDataDAO.getCitiesList();
+		if(citiesList==null)
+			citiesList = dataLoader.getCitiesList();
 	}*/
 
 	public void loadCreditCards() {
