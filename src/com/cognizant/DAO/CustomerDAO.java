@@ -14,4 +14,5 @@ public interface CustomerDAO {
 	public int bookHotel(Booking booking);
 	public int makePayment(Payment payment);
 	public ArrayList<Booking> getAllBookings(User user);
+	public int cancelBooking(Booking booking);
 }

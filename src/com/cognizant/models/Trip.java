@@ -1,8 +1,8 @@
 package com.cognizant.models;
 
 public class Trip {
-	String country;
-	String city;
+	int cityId;
+	int countryId;
 	String startDate;
 	String endDate;
 	int adultCount;
@@ -11,53 +11,47 @@ public class Trip {
 	public Trip() {
 	}
 
-
-	public Trip(String country, String city, String startDate, String endDate, int adultCount, int childCount) {
+	public Trip(int cityId, int countryId, String startDate, String endDate, int adultCount, int childCount) {
 		super();
-		this.country = country;
-		this.city = city;
+		this.cityId = cityId;
+		this.countryId = countryId;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.adultCount = adultCount;
 		this.childCount = childCount;
 	}
 
-
-	public String getCountry() {
-		return country;
+	public int getCityId() {
+		return cityId;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
 
-	public String getCity() {
-		return city;
+	public int getCountryId() {
+		return countryId;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setCountryId(int countryId) {
+		this.countryId = countryId;
 	}
 
 	public String getStartDate() {
 		return startDate;
 	}
 
-
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-
 
 	public String getEndDate() {
 		return endDate;
 	}
 
-
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-
 
 	public int getAdultCount() {
 		return adultCount;

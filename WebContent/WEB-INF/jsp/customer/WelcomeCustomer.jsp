@@ -34,16 +34,18 @@
 			<form:form id="hotelSearchForm" modelAttribute="trip"
 				action="availableHotels" method="post">
 				<p class="contact">
-					<form:label path="country">Country</form:label>
+					<form:label path="countryId">Country</form:label>
 				</p>
-				<form:select class="select-style" path="country"
-					items="${countriesList}" cssStyle="width:420px"></form:select>
+				<form:select class="select-style" path="countryId"
+					items="${countriesList}" itemValue="id" itemLabel="name"
+					cssStyle="width:420px"></form:select>
 				<br>
 				<br>
 				<p class="contact">
-					<form:label path="city">City</form:label>
+					<form:label path="cityId">City</form:label>
 				</p>
-				<form:select class="select-style" path="city" items="${citiesList}"
+				<form:select class="select-style" path="cityId"
+					items="${citiesList}" itemValue="id" itemLabel="name"
 					cssStyle="width:420px"></form:select>
 				<br>
 				<br>
@@ -56,14 +58,7 @@
 				</p>
 				<form:input type="date" path="endDate" required="required"></form:input>
 
-				<p class="contact">
-					<form:label path="adultCount">No. of Adults</form:label>
-				</p>
-				<form:input path="adultCount" required="required"></form:input>
-				<p class="contact">
-					<form:label path="childCount">No. of Child</form:label>
-				</p>
-				<form:input path="childCount" required="required"></form:input>
+				
 				<input class="buttom" value="Search" type="submit" />
 			</form:form>
 		</div>

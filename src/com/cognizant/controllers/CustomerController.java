@@ -3,14 +3,19 @@ package com.cognizant.controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JOptionPane;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cognizant.DAO.CustomerDAO;
+import com.cognizant.DAO.ObjectFromidDAO;
+import com.cognizant.DAO.StaticDataDAO;
 import com.cognizant.models.Booking;
 import com.cognizant.models.Hotel;
 import com.cognizant.models.HotelsList;
@@ -22,6 +27,10 @@ import com.cognizant.utils.Global;
 public class CustomerController {
 	@Autowired
 	CustomerDAO customerDAO;
+	@Autowired
+	StaticDataDAO staticDataDAO;
+	@Autowired
+	ObjectFromidDAO objectFromIdDAO;
 
 	@RequestMapping(value = "/welcomeCustomer", method = RequestMethod.GET)
 	public String showSearchPage(ModelMap model) {
@@ -34,8 +43,8 @@ public class CustomerController {
 		}
 		model.addAttribute("trip", new Trip());
 		model.addAttribute("username", Global.user.getUsername());
-		model.addAttribute("citiesList", Global.citiesList);
-		model.addAttribute("countriesList", Global.countriesList);
+		model.addAttribute("citiesList", staticDataDAO.getCitiesList());
+		model.addAttribute("countriesList", staticDataDAO.getCountriesList());
 		return "customer/WelcomeCustomer";
 	}
 
@@ -72,16 +81,12 @@ public class CustomerController {
 
 	@RequestMapping(value = "/reviewBooking", method = RequestMethod.POST)
 	public String reviewBooking(@ModelAttribute("booking") Booking booking, ModelMap model) {
+
 		Global.getInstance();
 		if (Global.user != null) {
 			model.addAttribute("user", Global.user);
 		} else {
 			return "redirect:/login";
-		}
-		if (Global.trip != null) {
-			model.addAttribute("trip", Global.trip);
-		} else {
-			return "redirect:/welcomeCustomer";
 		}
 		if (Global.hotel != null) {
 			model.addAttribute("hotel", Global.hotel);
@@ -92,39 +97,35 @@ public class CustomerController {
 		int totalCost = booking.getAc_rooms_count() * Global.hotel.getRateAdultAC()
 				+ booking.getNon_ac_rooms_count() * Global.hotel.getRateAdultNonAC();
 		model.addAttribute("totalCost", totalCost);
-		
+
 		booking.setUser_id(Global.user.getId());
 		booking.setHotel_id(Global.hotel.getHotelUniqueId());
 		booking.setBooking_date("2017/08/29");
-		booking.setAdults_count(Global.trip.getAdultCount());
-		booking.setChild_count(Global.trip.getChildCount());
-		booking.setStart_date(Global.trip.getStartDate());
-		booking.setEnd_date(Global.trip.getEndDate());
 		booking.setTotal_cost(totalCost);
 		Global.getInstance().setBooking(booking);
 		model.addAttribute("booking", booking);
 		return "customer/ReviewBooking";
+
 	}
-	
-	@RequestMapping(value = "/allBookings", method = RequestMethod.GET)
-	public String allBookings(ModelMap model){
-		if(Global.user==null)
-			return "redirect:/login";
-		ArrayList<Booking> bookings = customerDAO.getAllBookings(Global.user);
-		model.addAttribute("bookingsList", bookings);
-		return "customer/AllBookings";
-	}
-	
-	@RequestMapping(value="/makePayment",method=RequestMethod.POST)
-	public String makePayment(ModelMap model){
-		model.addAttribute("payment",new Payment());
+
+	@RequestMapping(value = "/makePayment", method = RequestMethod.POST)
+	public String makePayment(ModelMap model, @RequestParam String action) {
 		Global.getInstance();
-		model.addAttribute("cardTypes",Global.cardTypes);
-		return "customer/Payment";
+		if (action.equals("edit")) {
+			model.addAttribute("hotel", Global.hotel);
+			model.addAttribute("booking", new Booking());
+			return "customer/BookHotel";
+		} else {
+			model.addAttribute("payment", new Payment());
+			Global.getInstance();
+			model.addAttribute("cardTypes", Global.cardTypes);
+			return "customer/Payment";
+		}
+
 	}
-	
-	@RequestMapping(value="/bookingSuccessful",method=RequestMethod.POST)
-	public String bookingSuccessful(@ModelAttribute("payment") Payment payment,ModelMap model){
+
+	@RequestMapping(value = "/bookingSuccessful", method = RequestMethod.POST)
+	public String bookingSuccessful(@ModelAttribute("payment") Payment payment, ModelMap model) {
 		if (Global.user != null) {
 			payment.setUser_id(Global.user.getId());
 			payment.setStatus(0);
@@ -134,9 +135,41 @@ public class CustomerController {
 		int bookingId = customerDAO.bookHotel(Global.booking);
 		int transactionId = customerDAO.makePayment(payment);
 		Global.getInstance();
-		model.addAttribute("BookingId",bookingId);
-		model.addAttribute("TransactionId",transactionId);
+		model.addAttribute("BookingId", bookingId);
+		model.addAttribute("TransactionId", transactionId);
 		return "customer/BookingSuccessful";
 	}
-	
+
+	@RequestMapping(value = "/allBookings", method = RequestMethod.GET)
+	public String allBookings(ModelMap model) {
+		Global.getInstance();
+		if (Global.user == null)
+			return "redirect:/login";
+		ArrayList<Booking> bookings = customerDAO.getAllBookings(Global.user);
+		model.addAttribute("bookingsList", bookings);
+		model.addAttribute("booking", new Booking());
+		return "customer/AllBookings";
+	}
+
+	@RequestMapping(value="/changeBooking",method=RequestMethod.POST)
+	public String changeBooking(@ModelAttribute("booking") Booking booking,@RequestParam String action,ModelMap model){
+		System.out.println(booking.getHotel_id());
+		Global.getInstance().setHotel(objectFromIdDAO.getHotelWithId(booking.getHotel_id()));
+		if(action.equals("edit")){
+			Global.getInstance();
+			model.addAttribute("hotel", Global.hotel);
+			model.addAttribute("booking",booking);
+			return "customer/BookHotel";
+		}
+		else{
+			int success = customerDAO.cancelBooking(booking);
+			if(success==1)
+				JOptionPane.showMessageDialog(null,"booking successfully cancelled ");
+			else
+				JOptionPane.showMessageDialog(null,"Error deleting booking.Please try again.");
+			return "redirect:/allBookings";
+		}
+		
+			
+	}
 }

@@ -25,13 +25,31 @@
 		</header>
 		<c:forEach items="${bookingsList}" var="items" varStatus="status">
 			<div class="form">
-				${items.id} ${items.hotel_id} ${items.start_date} ${items.end_date}
-				${items.total_cost} <a href="welcomeCustomer"> <img
+				<form:form id="allBookingsForm" modelAttribute="booking"
+					action="changeBooking" method="post">
+					${items.id} ${items.hotel_id} ${items.start_date} ${items.end_date}
+					${items.total_cost} 
+					<form:hidden path="id" value="${items.id}"/>
+					<form:hidden path="hotel_id" value="${items.hotel_id}"/>
+					<form:hidden path="user_id" value="${items.user_id}"/>
+					<form:hidden path="booking_date" value="${items.booking_date}"/>
+					<form:hidden path="start_date" value="${items.start_date}"/>
+					<form:hidden path="end_date" value="${items.end_date}"/>
+					<form:hidden path="adults_count" value="${items.adults_count}"/>
+					<form:hidden path="child_count" value="${items.child_count}"/>
+					<form:hidden path="ac_rooms_count" value="${items.ac_rooms_count}"/>
+					<form:hidden path="non_ac_rooms_count" value="${items.non_ac_rooms_count}"/>
+					<form:hidden path="total_cost" value="${items.total_cost}"/>
+					
+					<input type="submit" name="action" value="edit" background="<c:url value='css/images/edit_icon.png' />"/>
+					<input type="submit" name="action" value="cancel" background="<c:url value='css/images/cancel-icon.png' />"/>
+					<!-- <a href="welcomeCustomer"> <img
 					src="css/images/edit_icon.png" width="30px" height="30px" /></a>
 				</h2>
-				 <a href="welcomeCustomer"> <img
-					src="css/images/cancel-icon.png" width="30px" height="30px" /></a>
-				</h2>
+				<a href="welcomeCustomer"> <img src="css/images/cancel-icon.png"
+					width="30px" height="30px" /></a>
+				</h2> -->
+				</form:form>
 				<br>
 			</div>
 			<br>

@@ -36,14 +36,14 @@
 					<form:hidden path="rateChildNonAC" value="${items.rateChildNonAC}"/>
 					<form:hidden path="rateAdultNonAC" value="${items.rateAdultNonAC}"/>
 					<form:hidden path="description" value="${items.description}"/>
-					<form:hidden path="country" value="${items.country}"/>
-					<form:hidden path="city" value="${items.city}"/>
+					<form:hidden path="countryId" value="${items.countryId}"/>
+					<form:hidden path="cityId" value="${items.cityId}"/>
 					<form:hidden path="hotelId" value="${items.hotelId}"/>
 					<p class="contact">
 						<form:label path="hotelName">${items.hotelName}</form:label>
 					</p>
-					<form:label path="city">${items.city},</form:label>
-					<form:label path="country">${items.country}</form:label><br><br>
+					<form:label path="cityId">${items.cityId},</form:label>
+					<form:label path="countryId">${items.countryId}</form:label><br><br>
 					
 					<c:choose>
 						<c:when test="${availableHotels[status.index]}">

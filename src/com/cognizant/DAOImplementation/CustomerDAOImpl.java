@@ -44,11 +44,14 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public int bookHotel(Booking booking) {
+		if (booking.getId() != 0)
+			return editBooking(booking);
 		String sql = "INSERT INTO Booking(hotel_id,user_id,booking_date,start_date,end_date,adults_count,child_count,ac_rooms_count,non_ac_rooms_count,total_cost) VALUES(?,?,?,?,?,?,?,?,?,?)";
 		int returnValue = getJdbcTemplate().update(sql,
 				new Object[] { booking.getHotel_id(), booking.getUser_id(), booking.getBooking_date(),
 						booking.getStart_date(), booking.getEnd_date(), booking.getAdults_count(),
-						booking.getChild_count(), booking.getAc_rooms_count(), booking.getNon_ac_rooms_count(),booking.getTotal_cost()});
+						booking.getChild_count(), booking.getAc_rooms_count(), booking.getNon_ac_rooms_count(),
+						booking.getTotal_cost() });
 		if (returnValue == 1) {
 			sql = "Select * from Booking where hotel_id=? AND user_id=? AND booking_date =? AND start_date =? AND end_date =? AND adults_count =? AND child_count =? AND ac_rooms_count =? AND non_ac_rooms_count=?";
 			List<Booking> bookings = getJdbcTemplate().query(sql,
@@ -58,6 +61,16 @@ public class CustomerDAOImpl implements CustomerDAO {
 					new BookingMapper());
 			return bookings.get(bookings.size() - 1).getId();
 		}
+		return 0;
+	}
+
+	public int editBooking(Booking booking) {
+		String sql = "UPDATE Booking SET start_date=?,end_date=?,ac_rooms_count=?,non_ac_rooms_count=?,total_cost=?,child_count=?,adults_count=? WHERE id = ?";
+		int returnValue = getJdbcTemplate().update(sql,
+				new Object[] { booking.getStart_date(), booking.getEnd_date(), booking.getAc_rooms_count(),
+						booking.getNon_ac_rooms_count(), booking.getTotal_cost(),booking.getChild_count(),booking.getAdults_count(),booking.getId() });
+		if (returnValue == 1)
+			return booking.getId();
 		return 0;
 	}
 
@@ -84,8 +97,25 @@ public class CustomerDAOImpl implements CustomerDAO {
 	@Override
 	public ArrayList<Booking> getAllBookings(User user) {
 		String sql = "SELECT * from Booking WHERE user_id=?";
-		List<Booking> bookings = getJdbcTemplate().query(sql,new Object[]{user.getId()},new BookingMapper());
+		List<Booking> bookings = getJdbcTemplate().query(sql, new Object[] { user.getId() }, new BookingMapper());
 		return (ArrayList<Booking>) bookings;
+	}
+
+	@Override
+	public int cancelBooking(Booking booking) {
+		String sql = "DELETE from Booking WHERE id=?";
+		int returnValue = getJdbcTemplate().update(sql, new Object[] { booking.getId() });
+
+		if (returnValue == 1) {
+			String sql1 = "INSERT INTO cancelled_bookings(booking_id,hotel_id,user_id,booking_date,start_date,end_date,adults_count,child_count,ac_rooms_count,non_ac_rooms_count,total_cost) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+			int returnValue1 = getJdbcTemplate().update(sql1,
+					new Object[] { booking.getId(), booking.getHotel_id(), booking.getUser_id(),
+							booking.getBooking_date(), booking.getStart_date(), booking.getEnd_date(),
+							booking.getAdults_count(), booking.getChild_count(), booking.getAc_rooms_count(),
+							booking.getNon_ac_rooms_count(), booking.getTotal_cost() });
+			return returnValue1;
+		}
+		return 0;
 	}
 
 }
