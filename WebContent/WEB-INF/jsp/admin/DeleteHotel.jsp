@@ -25,10 +25,10 @@
 			<form:form id="deleteHotelPage" modelAttribute="hotel"
 				action="processDeleteHotel" method="post">
 				<p class="contact">
-					<form:label path="hotelId">Hotel Id</form:label>
+					<form:label path="hotelUniqueId">Hotel Id</form:label>
 				</p>
-				<form:select class="select-style" path="identifyHotel"
-					items="${hotelIds}" cssStyle="width:420px" required="required"></form:select>
+				<form:select class="select-style" path="hotelUniqueId"
+					items="${hotelsList}" itemValue="hotelUniqueId" itemLabel="identifyHotel" cssStyle="width:420px" required="required"></form:select>
 				<br>
 				<br>
 				<input class="buttom" value="Delete" type="submit" />

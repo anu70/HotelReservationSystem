@@ -14,12 +14,13 @@ public class Hotel {
 	int rateAdultAC;
 	int rateChildNonAC;
 	int rateAdultNonAC;
+	int deleteStatus;
 	public Hotel(){}
 	
 
 	public Hotel(int hotelUniqueId, String hotelId, String hotelName, Integer cityId, int countryId, String description,
 			String identifyHotel, int acRoomsCount, int nonACRoomsCount, int rateChildAC, int rateAdultAC,
-			int rateChildNonAC, int rateAdultNonAC) {
+			int rateChildNonAC, int rateAdultNonAC, int deleteStatus) {
 		super();
 		this.hotelUniqueId = hotelUniqueId;
 		this.hotelId = hotelId;
@@ -34,6 +35,7 @@ public class Hotel {
 		this.rateAdultAC = rateAdultAC;
 		this.rateChildNonAC = rateChildNonAC;
 		this.rateAdultNonAC = rateAdultNonAC;
+		this.deleteStatus = deleteStatus;
 	}
 
 
@@ -127,6 +129,16 @@ public class Hotel {
 	}
 	public void setRateAdultNonAC(int rateAdultNonAC) {
 		this.rateAdultNonAC = rateAdultNonAC;
+	}
+
+
+	public int getDeleteStatus() {
+		return deleteStatus;
+	}
+
+
+	public void setDeleteStatus(int deleteStatus) {
+		this.deleteStatus = deleteStatus;
 	}
 	
 }

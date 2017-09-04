@@ -158,27 +158,28 @@ public class AdminController {
 		if (!Global.user.getRole().equals("admin"))
 			return "NotAuthorized";
 
-		List<String> hotelIds = new ArrayList<String>();
+		/*List<String> hotelIds = new ArrayList<String>();
 		for (int i = 0; i < adminDAO.getAllHotels().size(); i++)
-			hotelIds.add(adminDAO.getAllHotels().get(i).getIdentifyHotel());
+			hotelIds.add(adminDAO.getAllHotels().get(i).getIdentifyHotel());*/
 		model.addAttribute("hotel", new Hotel());
-		model.addAttribute("hotelIds", hotelIds);
+		model.addAttribute("hotelsList", adminDAO.getAllHotels());
 		return "admin/DeleteHotel";
 	}
 
 	@RequestMapping(value = "/processDeleteHotel", method = RequestMethod.POST)
 	public String processDeleteHotel(@ModelAttribute("hotel") Hotel hotel, ModelMap model) {
-		hotel.setHotelId(hotel.getIdentifyHotel().split("\\..")[0]);
 		int errorCode = adminDAO.deleteHotel(hotel);
 		if (errorCode == 2) {
 			JOptionPane.showMessageDialog(null,
-					"This hotel have future booking so you can't delete it." + hotel.getHotelId());
+					"This hotel have future booking so you can't delete it.");
 			return "redirect:/deleteHotel";
 		} else if (errorCode == 1) {
+			JOptionPane.showMessageDialog(null, "Hotel Successfully Deleted");
 			Global.getInstance();
 			model.addAttribute("username", Global.user.getUsername());
 			return "admin/WelcomeAdmin";
 		} else {
+			JOptionPane.showMessageDialog(null, "Error Deleting Hotel");
 			return "redirect:/deleteHotel";
 		}
 	}

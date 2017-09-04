@@ -25,6 +25,7 @@ public class HotelMapper implements RowMapper<Hotel> {
 		hotel.setDescription(result.getString("description"));
 		hotel.setIdentifyHotel(result.getString("hotel_id") + ".." + result.getString("name") + ".."
 				+ result.getString("city") + ".." + result.getString("country"));
+		hotel.setDeleteStatus(result.getInt("delete_status"));
 		return hotel;
 
 	}
