@@ -37,7 +37,7 @@
 				<p class="contact">
 					<form:label path="start_date">From</form:label>
 				</p>
-				<form:input type="date" path="start_date" required="required"></form:input>
+				<form:input type="date" path="start_date" required="required" min="${todaysDate}"></form:input>
 				<p class="contact">
 					<form:label path="end_date">To</form:label>
 				</p>
@@ -45,21 +45,21 @@
 				<p class="contact">
 					<form:label path="ac_rooms_count">No. Of AC Rooms</form:label>
 				</p>
-				<form:input path="ac_rooms_count" required="required"></form:input>
+				<form:input type="number" path="ac_rooms_count" required="required" min="0" max="${hotel.leftACRoom}"></form:input>
 				<p class="contact">
 					<form:label path="non_ac_rooms_count">No. Of Non-AC Rooms</form:label>
 				</p>
-				<form:input path="non_ac_rooms_count" required="required"></form:input>
+				<form:input type="number" path="non_ac_rooms_count" required="required" min="0" max="${hotel.leftNonACRoom}"></form:input>
 				<p class="contact">${hotel.description}</p>
 				<br>
 				<p class="contact">
-					<form:label path="adults_count">No. of Adults</form:label>
+					<form:label  path="adults_count" >No. of Adults</form:label>
 				</p>
-				<form:input path="adults_count" required="required"></form:input>
+				<form:input type="number" path="adults_count" min="0" required="required"></form:input>
 				<p class="contact">
-					<form:label path="child_count">No. of Child</form:label>
+					<form:label  path="child_count" >No. of Child</form:label>
 				</p>
-				<form:input path="child_count" required="required"></form:input><br>
+				<form:input type="number" path="child_count" min="0" required="required"></form:input><br>
 				<input class="buttom" type="submit" name="action" value="Book Now" />
 			</form:form>
 		</div>

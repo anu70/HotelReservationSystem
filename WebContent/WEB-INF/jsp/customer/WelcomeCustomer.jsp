@@ -52,7 +52,7 @@
 				<p class="contact">
 					<form:label path="startDate">From</form:label>
 				</p>
-				<form:input type="date" path="startDate" required="required"></form:input>
+				<form:input type="date" path="startDate" required="required" min="${todaysDate}"></form:input>
 				<p class="contact">
 					<form:label path="endDate">To</form:label>
 				</p>

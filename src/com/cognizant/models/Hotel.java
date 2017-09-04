@@ -15,8 +15,11 @@ public class Hotel {
 	int rateChildNonAC;
 	int rateAdultNonAC;
 	int deleteStatus;
-	public Hotel(){}
-	
+	int leftACRoom;
+	int leftNonACRoom;
+
+	public Hotel() {
+	}
 
 	public Hotel(int hotelUniqueId, String hotelId, String hotelName, Integer cityId, int countryId, String description,
 			String identifyHotel, int acRoomsCount, int nonACRoomsCount, int rateChildAC, int rateAdultAC,
@@ -38,7 +41,7 @@ public class Hotel {
 		this.deleteStatus = deleteStatus;
 	}
 
-
+	
 	public int getHotelUniqueId() {
 		return hotelUniqueId;
 	}
@@ -50,95 +53,121 @@ public class Hotel {
 	public String getIdentifyHotel() {
 		return identifyHotel;
 	}
+
 	public void setIdentifyHotel(String identifyHotel) {
 		this.identifyHotel = identifyHotel;
 	}
+
 	public String getHotelId() {
 		return hotelId;
 	}
+
 	public void setHotelId(String hotelId) {
 		this.hotelId = hotelId;
 	}
+
 	public String getHotelName() {
 		return hotelName;
 	}
+
 	public void setHotelName(String hotelName) {
 		this.hotelName = hotelName;
 	}
-	
 
 	public int getCountryId() {
 		return countryId;
 	}
 
-
-
 	public void setCountryId(int countryId) {
 		this.countryId = countryId;
 	}
-	
 
 	public Integer getCityId() {
 		return cityId;
 	}
 
-
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
 
-
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public int getAcRoomsCount() {
 		return acRoomsCount;
 	}
+
 	public void setAcRoomsCount(int acRoomsCount) {
 		this.acRoomsCount = acRoomsCount;
 	}
+
 	public int getNonACRoomsCount() {
 		return nonACRoomsCount;
 	}
+
 	public void setNonACRoomsCount(int nonACRoomsCount) {
 		this.nonACRoomsCount = nonACRoomsCount;
 	}
+
 	public int getRateChildAC() {
 		return rateChildAC;
 	}
+
 	public void setRateChildAC(int rateChildAC) {
 		this.rateChildAC = rateChildAC;
 	}
+
 	public int getRateAdultAC() {
 		return rateAdultAC;
 	}
+
 	public void setRateAdultAC(int rateAdultAC) {
 		this.rateAdultAC = rateAdultAC;
 	}
+
 	public int getRateChildNonAC() {
 		return rateChildNonAC;
 	}
+
 	public void setRateChildNonAC(int rateChildNonAC) {
 		this.rateChildNonAC = rateChildNonAC;
 	}
+
 	public int getRateAdultNonAC() {
 		return rateAdultNonAC;
 	}
+
 	public void setRateAdultNonAC(int rateAdultNonAC) {
 		this.rateAdultNonAC = rateAdultNonAC;
 	}
-
 
 	public int getDeleteStatus() {
 		return deleteStatus;
 	}
 
-
 	public void setDeleteStatus(int deleteStatus) {
 		this.deleteStatus = deleteStatus;
 	}
-	
+
+	public int getLeftACRoom() {
+		return leftACRoom;
+	}
+
+	public void setLeftACRoom(int leftACRoom) {
+		this.leftACRoom = leftACRoom;
+	}
+
+	public int getLeftNonACRoom() {
+		return leftNonACRoom;
+	}
+
+	public void setLeftNonACRoom(int leftNonACRoom) {
+		this.leftNonACRoom = leftNonACRoom;
+	}
+
 }

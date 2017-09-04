@@ -16,6 +16,8 @@ import com.cognizant.DAO.CustomerDAO;
 import com.cognizant.DAO.ObjectFromidDAO;
 import com.cognizant.DAO.StaticDataDAO;
 import com.cognizant.models.Booking;
+import com.cognizant.models.City;
+import com.cognizant.models.Country;
 import com.cognizant.models.Hotel;
 import com.cognizant.models.HotelsList;
 import com.cognizant.models.Payment;
@@ -44,6 +46,7 @@ public class CustomerController {
 		model.addAttribute("username", Global.user.getUsername());
 		model.addAttribute("citiesList", staticDataDAO.getCitiesList());
 		model.addAttribute("countriesList", staticDataDAO.getCountriesList());
+		model.addAttribute("todaysDate",Global.todaysDate);
 		return "customer/WelcomeCustomer";
 	}
 
@@ -52,10 +55,10 @@ public class CustomerController {
 		ArrayList<Booking> bookedHotels = customerDAO.getBookedHotels(trip);
 		Global.getInstance().setTrip(trip);
 		HotelsList allHotels = customerDAO.getAllHotels(trip);
-		//boolean[] isAvailable = new boolean[allHotels.getHotelList().size()];
 		int[][] roomsBookedCount = new int[allHotels.getHotelList().size()][2];
-		//Arrays.fill(isAvailable, true);
-
+		ArrayList<Country> countryList = new ArrayList<Country>();
+		ArrayList<City> cityList = new ArrayList<City>();
+		
 		for (int i = 0; i < bookedHotels.size(); i++) {
 			int hotelid = bookedHotels.get(i).getHotel_id();
 			for (int j = 0; j < allHotels.getHotelList().size(); j++) {
@@ -66,9 +69,16 @@ public class CustomerController {
 				}
 			}
 		}
+		
+		for(int i=0;i<allHotels.hotelList.size();i++){
+			countryList.add(objectFromIdDAO.getContryWithId(allHotels.hotelList.get(i).getCountryId()));
+			cityList.add(objectFromIdDAO.getCityWithId(allHotels.hotelList.get(i).getCityId()));
+		}
 		model.addAttribute("roomsBookedCount", roomsBookedCount);
 		model.addAttribute("hotel", new Hotel());
 		model.addAttribute("hotelsList", allHotels);
+		model.addAttribute("countryList",countryList);
+		model.addAttribute("cityList",cityList);
 		return "customer/AvailableHotels";
 	}
 
@@ -77,6 +87,7 @@ public class CustomerController {
 		Global.getInstance().setHotel(hotel);
 		model.addAttribute("hotel", Global.hotel);
 		model.addAttribute("booking", new Booking());
+		model.addAttribute("todaysDate",Global.todaysDate);
 		return "customer/BookHotel";
 	}
 
@@ -147,7 +158,12 @@ public class CustomerController {
 		if (Global.user == null)
 			return "redirect:/login";
 		ArrayList<Booking> bookings = customerDAO.getAllBookings(Global.user);
+		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+		for(int i=0;i<bookings.size();i++){
+			hotels.add(objectFromIdDAO.getHotelWithId(bookings.get(i).getHotel_id()));
+		}
 		model.addAttribute("bookingsList", bookings);
+		model.addAttribute("hotelsList",hotels);
 		model.addAttribute("booking", new Booking());
 		return "customer/AllBookings";
 	}

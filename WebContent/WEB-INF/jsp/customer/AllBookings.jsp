@@ -27,8 +27,8 @@
 			<div class="form">
 				<form:form id="allBookingsForm" modelAttribute="booking"
 					action="changeBooking" method="post">
-					${items.id} ${items.hotel_id} ${items.start_date} ${items.end_date}
-					${items.total_cost} 
+					<span style="font-weight:bold"> ${items.id} ${hotelsList[status.index].hotelName} ${items.start_date} ${items.end_date}
+					${items.total_cost} </span>
 					<form:hidden path="id" value="${items.id}"/>
 					<form:hidden path="hotel_id" value="${items.hotel_id}"/>
 					<form:hidden path="user_id" value="${items.user_id}"/>
@@ -41,7 +41,7 @@
 					<form:hidden path="non_ac_rooms_count" value="${items.non_ac_rooms_count}"/>
 					<form:hidden path="total_cost" value="${items.total_cost}"/>
 					
-					<input type="submit" name="action" value="edit" background="<c:url value='css/images/edit_icon.png' />"/>
+					<input type="submit" name="action" value="edit" />
 					<input type="submit" name="action" value="cancel" background="<c:url value='css/images/cancel-icon.png' />"/>
 					<!-- <a href="welcomeCustomer"> <img
 					src="css/images/edit_icon.png" width="30px" height="30px" /></a>

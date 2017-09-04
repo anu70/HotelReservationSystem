@@ -39,11 +39,12 @@
 					<form:hidden path="countryId" value="${items.countryId}"/>
 					<form:hidden path="cityId" value="${items.cityId}"/>
 					<form:hidden path="hotelId" value="${items.hotelId}"/>
+					<form:hidden path="leftACRoom" value="${items.acRoomsCount-roomsBookedCount[status.index][0]}"/>
+					<form:hidden path="leftNonACRoom" value="${items.nonACRoomsCount- roomsBookedCount[status.index][0]}"/>
 					<p class="contact">
 						<form:label path="hotelName">${items.hotelName}</form:label>
 					</p>
-					<form:label path="cityId">${items.cityId},</form:label>
-					<form:label path="countryId">${items.countryId}</form:label><br><br>
+					${cityList[status.index].name}, ${countryList[status.index].name} <br><br>
 					
 					<c:choose>
 						<c:when test="${items.acRoomsCount-roomsBookedCount[status.index][0]>0 || items.nonACRoomsCount- roomsBookedCount[status.index][0]>0}">

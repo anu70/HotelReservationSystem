@@ -27,11 +27,12 @@
 			<span>Hotel Reservation System</span> Registration Form
 		</h1>
 		</header>
-		
+
 		<div class="form">
-		<h4>
-			<span style="color: red">${message}</span><br><br>
-		</h4>
+			<h4>
+				<span style="color: red">${message}</span><br>
+				<br>
+			</h4>
 			<form:form id="registrationForm" modelAttribute="user"
 				action="processRegistration" method="post">
 				<form:errors />
@@ -61,14 +62,15 @@
 					<form:label path="country">Country</form:label>
 				</p>
 				<form:select class="select-style" path="country"
-					items="${countriesList}" cssStyle="width:420px"></form:select>
+					items="${countriesList}" itemValue="id" itemLabel="name"
+					cssStyle="width:420px"></form:select>
 				<br>
 				<br>
 				<p class="contact">
 					<form:label path="city">City</form:label>
 				</p>
 				<form:select class="select-style" path="city" items="${citiesList}"
-					cssStyle="width:420px"></form:select>
+					itemValue="id" itemLabel="name" cssStyle="width:420px"></form:select>
 				<br>
 				<br>
 				<p class="contact">
@@ -80,7 +82,7 @@
 				<p class="contact">
 					<form:label path="dob">Date Of Birth</form:label>
 				</p>
-				<form:input path="dob" required="required" />
+				<form:input type="date" path="dob" required="required"/>
 				<p class="contact">
 					<form:label path="pincode">Pincode</form:label>
 				</p>
@@ -91,7 +93,7 @@
 
 			</form:form>
 		</div>
-		
+
 	</div>
 
 </body>

@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.cognizant.DAO.ObjectFromidDAO;
+import com.cognizant.mappers.CityMapper;
+import com.cognizant.mappers.CountryMapper;
 import com.cognizant.mappers.HotelMapper;
 import com.cognizant.models.City;
 import com.cognizant.models.Country;
@@ -33,14 +35,20 @@ public class ObjectFromidDAOImpl implements ObjectFromidDAO{
 
 	@Override
 	public Country getContryWithId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * from Country where id=?";
+		List<Country> countries = getJdbcTemplate().query(sql, new Object[] {id}, new CountryMapper());
+		if(countries.size()==0)
+			return null;
+		return countries.get(0);
 	}
 
 	@Override
 	public City getCityWithId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * from City where id=?";
+		List<City> cities = getJdbcTemplate().query(sql, new Object[] {id}, new CityMapper());
+		if(cities.size()==0)
+			return null;
+		return cities.get(0);
 	}
 
 }
