@@ -1,6 +1,9 @@
 package com.cognizant.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,15 +24,23 @@ public class Global {
 	public static Trip trip;
 	public static Hotel hotel;
 	public static Booking booking;
+	public static String todaysDate;
 	
 	public Global() {
 		rolesList = new LinkedHashMap<String, String>();
 		rolesList.put("customer", "Customer");
 		rolesList.put("admin", "Admin");
-	
+		if(todaysDate==null)
+			setTodaysDate();
 		//loadCountires();
 		//loadCities();
 		loadCreditCards();
+	}
+	
+	public void setTodaysDate(){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		todaysDate = dateFormat.format(date);
 	}
 
 	public void setUser(User user) {

@@ -8,8 +8,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.cognizant.DAO.AdminDAO;
+import com.cognizant.mappers.BookingMapper;
 import com.cognizant.mappers.HotelMapper;
+import com.cognizant.models.Booking;
 import com.cognizant.models.Hotel;
+import com.cognizant.utils.Global;
 
 @Repository("adminDAO")
 public class AdminDAOImpl implements AdminDAO {
@@ -59,9 +62,19 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public int deleteHotel(Hotel hotel) {
+		if(haveFutureBooking(hotel))
+			return 2;
 		String sql = "DELETE from Hotel WHERE hotel_id=?";
 		int returnValue = getJdbcTemplate().update(sql,
 				new Object[] {hotel.getHotelId()});
 		return returnValue;
+	}
+	
+	public boolean haveFutureBooking(Hotel hotel){
+		String sql = "SELECT * from Booking where hotel_id=? AND end_date>?";
+		Global.getInstance();
+		System.out.println(Global.todaysDate);
+		List<Booking> bookings = getJdbcTemplate().query(sql,new Object[]{hotel.getHotelId(),Global.todaysDate},new BookingMapper());
+		return bookings.size()>0?true:false;
 	}
 }

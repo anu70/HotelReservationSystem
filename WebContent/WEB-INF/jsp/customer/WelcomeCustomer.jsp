@@ -36,7 +36,7 @@
 				<p class="contact">
 					<form:label path="countryId">Country</form:label>
 				</p>
-				<form:select class="select-style" path="countryId"
+				<form:select class="select-style" id="country" path="countryId"
 					items="${countriesList}" itemValue="id" itemLabel="name"
 					cssStyle="width:420px"></form:select>
 				<br>
@@ -44,7 +44,7 @@
 				<p class="contact">
 					<form:label path="cityId">City</form:label>
 				</p>
-				<form:select class="select-style" path="cityId"
+				<form:select class="select-style" id="city" path="cityId"
 					items="${citiesList}" itemValue="id" itemLabel="name"
 					cssStyle="width:420px"></form:select>
 				<br>

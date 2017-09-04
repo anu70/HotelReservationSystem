@@ -29,8 +29,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public HotelsList getAllHotels(Trip trip) {
-		String sql = "SELECT * FROM Hotel";
-		List<Hotel> hotels = getJdbcTemplate().query(sql, new Object[] {}, new HotelMapper());
+		String sql = "SELECT * FROM Hotel where city=? AND country=?";
+		List<Hotel> hotels = getJdbcTemplate().query(sql, new Object[] {trip.getCityId(),trip.getCountryId()}, new HotelMapper());
 		return new HotelsList((ArrayList<Hotel>) hotels);
 	}
 

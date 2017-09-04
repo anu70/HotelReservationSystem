@@ -46,7 +46,7 @@
 					<form:label path="countryId">${items.countryId}</form:label><br><br>
 					
 					<c:choose>
-						<c:when test="${availableHotels[status.index]}">
+						<c:when test="${items.acRoomsCount-roomsBookedCount[status.index][0]>0 || items.nonACRoomsCount- roomsBookedCount[status.index][0]>0}">
 							<input class="buttom" type="submit" name="action"
 								value="Book Now" />
 						</c:when>

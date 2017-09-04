@@ -1,7 +1,6 @@
 package com.cognizant.controllers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
@@ -53,19 +52,21 @@ public class CustomerController {
 		ArrayList<Booking> bookedHotels = customerDAO.getBookedHotels(trip);
 		Global.getInstance().setTrip(trip);
 		HotelsList allHotels = customerDAO.getAllHotels(trip);
-		boolean[] isAvailable = new boolean[allHotels.getHotelList().size()];
-		Arrays.fill(isAvailable, true);
+		//boolean[] isAvailable = new boolean[allHotels.getHotelList().size()];
+		int[][] roomsBookedCount = new int[allHotels.getHotelList().size()][2];
+		//Arrays.fill(isAvailable, true);
 
 		for (int i = 0; i < bookedHotels.size(); i++) {
 			int hotelid = bookedHotels.get(i).getHotel_id();
 			for (int j = 0; j < allHotels.getHotelList().size(); j++) {
 				if (allHotels.getHotelList().get(j).getHotelUniqueId() == hotelid) {
-					isAvailable[j] = false;
+					roomsBookedCount[j][0] += bookedHotels.get(i).getAc_rooms_count();
+					roomsBookedCount[j][1] += bookedHotels.get(i).getNon_ac_rooms_count();
 					break;
 				}
 			}
 		}
-		model.addAttribute("availableHotels", isAvailable);
+		model.addAttribute("roomsBookedCount", roomsBookedCount);
 		model.addAttribute("hotel", new Hotel());
 		model.addAttribute("hotelsList", allHotels);
 		return "customer/AvailableHotels";
@@ -100,7 +101,7 @@ public class CustomerController {
 
 		booking.setUser_id(Global.user.getId());
 		booking.setHotel_id(Global.hotel.getHotelUniqueId());
-		booking.setBooking_date("2017/08/29");
+		booking.setBooking_date(Global.todaysDate);
 		booking.setTotal_cost(totalCost);
 		Global.getInstance().setBooking(booking);
 		model.addAttribute("booking", booking);

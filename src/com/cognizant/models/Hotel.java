@@ -4,7 +4,7 @@ public class Hotel {
 	int hotelUniqueId;
 	String hotelId;
 	String hotelName;
-	int cityId;
+	Integer cityId;
 	int countryId;
 	String description;
 	String identifyHotel;
@@ -17,7 +17,7 @@ public class Hotel {
 	public Hotel(){}
 	
 
-	public Hotel(int hotelUniqueId, String hotelId, String hotelName, int cityId, int countryId, String description,
+	public Hotel(int hotelUniqueId, String hotelId, String hotelName, Integer cityId, int countryId, String description,
 			String identifyHotel, int acRoomsCount, int nonACRoomsCount, int rateChildAC, int rateAdultAC,
 			int rateChildNonAC, int rateAdultNonAC) {
 		super();
@@ -74,14 +74,14 @@ public class Hotel {
 	public void setCountryId(int countryId) {
 		this.countryId = countryId;
 	}
+	
 
-
-	public int getCityId() {
+	public Integer getCityId() {
 		return cityId;
 	}
 
 
-	public void setCityId(int cityId) {
+	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
 

@@ -1,24 +1,26 @@
 package com.cognizant.models;
 
 public class City {
-	int id;
+	Integer id;
 	int country_id;
 	String name;
-	
-	public City(){}
 
-	public City(int id, int country_id, String name) {
-		this.id = id;
-		this.country_id = country_id;
-		this.name = name;
+	public City() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public City(Integer id, int country_id, String name) {
+		super();
+		this.id = id;
+		this.country_id = country_id;
+		this.name = name;
 	}
 
 	public int getCountry_id() {
@@ -36,6 +38,5 @@ public class City {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
 }

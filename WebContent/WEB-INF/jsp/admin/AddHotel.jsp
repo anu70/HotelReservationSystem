@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -8,12 +9,19 @@
 <title>Add New Hotel</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <link rel="stylesheet" type="text/css" href="css/demo.css" />
+<script type="text/javascript" src="css/jquery-3.2.1.js"></script>
+<script type="text/javascript"
+	src="<c:url value="css/jquery-3.2.1.js" />"></script>
+<script type="text/javascript">
+	window.scrollTo(0, 1);
+</script>
+
 </head>
 <body>
 	<div class="container">
 		<!-- freshdesignweb top bar -->
 		<div class="freshdesignweb-top">
-			<a href="welcomeAdmin">Welcome Screen</a> </a> </span><span class="right">
+			<a href="welcomeAdmin">Welcome Screen</a> <span class="right">
 				<a href="logout"> <strong>Logout</strong>
 			</a>
 			</span>
@@ -25,6 +33,38 @@
 		</h1>
 		</header>
 		<div class="form">
+			 <c:url var="findCountryCitiesURL" value="/cities" />
+
+			<script type="text/javascript">
+				$(document)
+						.ready(
+								function() {
+									$('#countryDropDown')
+											.change(
+													function() {
+														
+														var countryId1 = $(this).val();
+														//alert(countryId1);
+														
+														$.getJSON('${findCountryCitiesURL}', {
+															countryId : countryId1,
+															ajax : 'true'
+														}, function(data) {
+															/* var html = '<option value="">City</option>';
+															var len = data.length;
+															for ( var i = 0; i < len; i++) {
+																html += '<option value="' + data[i].name + '">'
+																		+ data[i].name + '</option>';
+															}
+															html += '</option>';
+
+															$('#cityDropDown').html(html); */
+														});
+														
+													});
+								});
+			</script> 
+
 			<h4>
 				<span style="color: red">${message}</span><br> <br>
 			</h4>
@@ -42,18 +82,23 @@
 				<p class="contact">
 					<form:label path="countryId">Country</form:label>
 				</p>
-				<form:select class="select-style" path="countryId"
+
+				<form:select class="select-style" id="countryDropDown"
 					items="${countriesList}" itemValue="id" itemLabel="name"
-					cssStyle="width:420px" onchange="this.form.submit()" name="countrySelector"
-					></form:select>
+					path="countryId" cssStyle="width:420px">
+				</form:select>
 				<br>
 				<br>
 				<p class="contact">
 					<form:label path="cityId">City</form:label>
 				</p>
-				<form:select class="select-style" path="cityId"
+				<form:select class="select-style" id="cityDropDown" path="cityId"
 					items="${citiesList}" itemValue="id" itemLabel="name"
-					cssStyle="width:420px"></form:select>
+					cssStyle="width:420px">
+					<form:option value="">City</form:option>
+				</form:select>
+
+
 				<br>
 				<br>
 
@@ -94,7 +139,8 @@
 					<form:label path="description">Description</form:label>
 				</p>
 				<form:input path="description" maxlength="150"></form:input>
-				<input class="buttom" value="Add Hotel" type="submit" name="submitButton"/>
+				<input class="buttom" value="Add Hotel" type="submit"
+					name="submitButton" />
 			</form:form>
 		</div>
 	</div>

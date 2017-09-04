@@ -59,7 +59,7 @@
 				<p class="contact">
 					<form:label path="child_count">No. of Child</form:label>
 				</p>
-				<form:input path="child_count" required="required"></form:input>
+				<form:input path="child_count" required="required"></form:input><br>
 				<input class="buttom" type="submit" name="action" value="Book Now" />
 			</form:form>
 		</div>
