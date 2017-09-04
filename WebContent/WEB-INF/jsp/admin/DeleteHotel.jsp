@@ -28,7 +28,9 @@
 					<form:label path="hotelUniqueId">Hotel Id</form:label>
 				</p>
 				<form:select class="select-style" path="hotelUniqueId"
-					items="${hotelsList}" itemValue="hotelUniqueId" itemLabel="identifyHotel" cssStyle="width:420px" required="required"></form:select>
+					items="${hotelsList}" itemValue="hotelUniqueId"
+					itemLabel="identifyHotel" cssStyle="width:420px"
+					required="required"></form:select>
 				<br>
 				<br>
 				<input class="buttom" value="Delete" type="submit" />

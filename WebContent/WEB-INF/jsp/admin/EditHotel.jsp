@@ -22,45 +22,56 @@
 		</h1>
 		</header>
 		<div class="form">
+			<h4>
+				<span style="color: red">${message}</span><br> <br>
+			</h4>
 			<form:form id="EditHotelPage" modelAttribute="hotel"
 				action="processEditHotel" method="post">
 				<p class="contact">
 					<form:label path="hotelId">Hotel Id</form:label>
 				</p>
-				<form:select class="select-style" path="identifyHotel"
-					items="${hotelIds}" cssStyle="width:420px" required="required"></form:select>
+				<form:select class="select-style" path="hotelUniqueId"
+					items="${hotelsList}" itemValue="hotelUniqueId"
+					itemLabel="identifyHotel" cssStyle="width:420px"
+					required="required"></form:select>
 				<br>
 				<br>
 				<p class="contact">
 					<form:label path="hotelName">Hotel Name</form:label>
 				</p>
 				<form:input path="hotelName" required="required" maxlength="20"></form:input>
-				
+
 				<p class="contact">
 					<form:label path="acRoomsCount">No. of AC Rooms</form:label>
 				</p>
-				<form:input path="acRoomsCount" required="required" 
+				<form:input path="acRoomsCount" required="required"
 					onkeypress='return event.charCode >= 48 && event.charCode <= 57'></form:input>
-					
+
 				<p class="contact">
 					<form:label path="nonACRoomsCount">No. of Non-AC Rooms</form:label>
 				</p>
 				<form:input path="nonACRoomsCount" required="required"
 					onkeypress='return event.charCode >= 48 && event.charCode <= 57'></form:input>
-					
+
 				<p class="contact">
 					<form:label path="rateAdultAC">AC Room rate</form:label>
 				</p>
-				<form:input path="rateChildAC" required="required"></form:input>
-				<form:input path="rateAdultAC" required="required"></form:input>
-				
+				<form:label path="rateAdultAC">Adult: </form:label>
+				<form:input path="rateAdultAC" required="required"
+					cssStyle="width:80px"></form:input>
+				<form:label path="rateChildAC">Child: </form:label>
+				<form:input path="rateChildAC" required="required"
+					cssStyle="width:80px"></form:input>
+
 				<p class="contact">
 					<form:label path="rateAdultNonAC">Non-AC Room rate</form:label>
 				</p>
-				<form:input path="rateChildNonAC" required="required"
-					placeholder="child"></form:input>
+				<form:label path="rateAdultNonAC">Adult: </form:label>
 				<form:input path="rateAdultNonAC" required="required"
-					placeholder="adult"></form:input>
+					cssStyle="width:80px"></form:input>
+				<form:label path="rateChildNonAC">Child: </form:label>
+				<form:input path="rateChildNonAC" required="required"
+					cssStyle="width:80px"></form:input>
 
 				<p class="contact">
 					<form:label path="description">Description</form:label>

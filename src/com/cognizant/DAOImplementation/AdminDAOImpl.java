@@ -52,11 +52,11 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public int editHotel(Hotel hotel) {
-		String sql = "UPDATE Hotel SET name=?,ac_rooms=?,non_ac_rooms=?,adult_ac_rate=?,child_ac_rate=?,adult_non_ac_rate=?,child_non_ac_rate=?,description=? WHERE hotel_id = ?";
+		String sql = "UPDATE Hotel SET name=?,ac_rooms=?,non_ac_rooms=?,adult_ac_rate=?,child_ac_rate=?,adult_non_ac_rate=?,child_non_ac_rate=?,description=? WHERE hotel_unique_id = ?";
 		int returnValue = getJdbcTemplate().update(sql,
 				new Object[] { hotel.getHotelName(), hotel.getAcRoomsCount(), hotel.getNonACRoomsCount(),
 						hotel.getRateAdultAC(), hotel.getRateChildAC(), hotel.getRateAdultNonAC(),
-						hotel.getRateChildNonAC(), hotel.getDescription(), hotel.getHotelId() });
+						hotel.getRateChildNonAC(), hotel.getDescription(), hotel.getHotelUniqueId() });
 		return returnValue;
 	}
 

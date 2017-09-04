@@ -98,11 +98,10 @@ public class AdminController {
 		}
 		int errorCode = adminDAO.addHotel(hotel);
 		if (errorCode == 2) {
-			JOptionPane.showMessageDialog(null, "Hotel with the hotel id:" + hotel.getHotelId() + " already exist.Please enter another hotel id");
+			JOptionPane.showMessageDialog(null,
+					"Hotel with the hotel id:" + hotel.getHotelId() + " already exist.Please enter another hotel id");
 
-			model = addHotelScreenWithErrorMsg(
-					"",
-					model, hotel);
+			model = addHotelScreenWithErrorMsg("", model, hotel);
 			return "admin/AddHotel";
 		}
 
@@ -127,23 +126,45 @@ public class AdminController {
 		if (!Global.user.getRole().equals("admin"))
 			return "NotAuthorized";
 
-		List<String> hotelIds = new ArrayList<String>();
-		for (int i = 0; i < adminDAO.getAllHotels().size(); i++)
-			hotelIds.add(adminDAO.getAllHotels().get(i).getIdentifyHotel());
 		model.addAttribute("hotel", new Hotel());
-		model.addAttribute("hotelIds", hotelIds);
+		model.addAttribute("hotelsList", adminDAO.getAllHotels());
 		return "admin/EditHotel";
 	}
 
 	@RequestMapping(value = "/processEditHotel", method = RequestMethod.POST)
 	public String processEditHotel(@ModelAttribute("hotel") Hotel hotel, ModelMap model) {
-		hotel.setHotelId(hotel.getIdentifyHotel().split("\\..")[0]);
+		if (hotel.getAcRoomsCount() > 300 || hotel.getNonACRoomsCount() > 300) {
+			model = editHotelScreenWithErrorMsg("No of rooms should be less than 300", model, hotel);
+			return "admin/EditHotel";
+		}
+		if (hotel.getRateAdultAC() < 2500 || hotel.getRateAdultAC() > 4000) {
+			model = editHotelScreenWithErrorMsg("Rate of AC Room for adults should be between Rs.2500 - Rs.4000 ", model,
+					hotel);
+			return "admin/EditHotel";
+		}
+		if (hotel.getRateAdultNonAC() < 2000 || hotel.getRateAdultNonAC() > 2500) {
+			model = editHotelScreenWithErrorMsg("Rate of Non-AC Room for adults should be between Rs.2000 - Rs.2500",
+					model, hotel);
+			return "admin/EditHotel";
+		}
+		if (hotel.getRateChildAC() < 2000 || hotel.getRateChildAC() > 3000) {
+			model = editHotelScreenWithErrorMsg("Rate of AC Room for child should be between Rs.2000 - Rs.3000", model,
+					hotel);
+			return "admin/EditHotel";
+		}
+		if (hotel.getRateChildNonAC() < 1000 || hotel.getRateChildNonAC() > 2000) {
+			model = editHotelScreenWithErrorMsg("Rate of Non-AC Room for child should be between Rs.1000 - Rs.2000",
+					model, hotel);
+			return "admin/EditHotel";
+		}
 		int errorCode = adminDAO.editHotel(hotel);
 		if (errorCode == 1) {
 			Global.getInstance();
+			JOptionPane.showMessageDialog(null, "Hotel successfully edited");
 			model.addAttribute("username", Global.user.getUsername());
 			return "admin/WelcomeAdmin";
 		} else {
+			JOptionPane.showMessageDialog(null, "Error editing hotel.Please try again");
 			return "redirect:/editHotel";
 		}
 	}
@@ -158,9 +179,6 @@ public class AdminController {
 		if (!Global.user.getRole().equals("admin"))
 			return "NotAuthorized";
 
-		/*List<String> hotelIds = new ArrayList<String>();
-		for (int i = 0; i < adminDAO.getAllHotels().size(); i++)
-			hotelIds.add(adminDAO.getAllHotels().get(i).getIdentifyHotel());*/
 		model.addAttribute("hotel", new Hotel());
 		model.addAttribute("hotelsList", adminDAO.getAllHotels());
 		return "admin/DeleteHotel";
@@ -168,20 +186,25 @@ public class AdminController {
 
 	@RequestMapping(value = "/processDeleteHotel", method = RequestMethod.POST)
 	public String processDeleteHotel(@ModelAttribute("hotel") Hotel hotel, ModelMap model) {
-		int errorCode = adminDAO.deleteHotel(hotel);
-		if (errorCode == 2) {
-			JOptionPane.showMessageDialog(null,
-					"This hotel have future booking so you can't delete it.");
-			return "redirect:/deleteHotel";
-		} else if (errorCode == 1) {
-			JOptionPane.showMessageDialog(null, "Hotel Successfully Deleted");
-			Global.getInstance();
-			model.addAttribute("username", Global.user.getUsername());
-			return "admin/WelcomeAdmin";
+		int reply = JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this hotel","Delete Hotel", JOptionPane.YES_NO_OPTION);
+		if (reply == JOptionPane.YES_OPTION) {
+			int errorCode = adminDAO.deleteHotel(hotel);
+			if (errorCode == 2) {
+				JOptionPane.showMessageDialog(null, "This hotel have future booking so you can't delete it.");
+				return "redirect:/deleteHotel";
+			} else if (errorCode == 1) {
+				JOptionPane.showMessageDialog(null, "Hotel Successfully Deleted");
+				Global.getInstance();
+				model.addAttribute("username", Global.user.getUsername());
+				return "admin/WelcomeAdmin";
+			} else {
+				JOptionPane.showMessageDialog(null, "Error Deleting Hotel");
+				return "redirect:/deleteHotel";
+			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Error Deleting Hotel");
 			return "redirect:/deleteHotel";
 		}
+		
 	}
 
 	public ModelMap addHotelScreenWithErrorMsg(String msg, ModelMap model, Hotel hotel) {
@@ -190,6 +213,13 @@ public class AdminController {
 		Lists list1 = new Lists(staticDataDAO.getCitiesList(), 1);
 		model.addAttribute("citiesList", list1.cityList);
 		model.addAttribute("countriesList", staticDataDAO.getCountriesList());
+		return model;
+	}
+	
+	public ModelMap editHotelScreenWithErrorMsg(String msg, ModelMap model, Hotel hotel){
+		model.addAttribute("hotelsList", adminDAO.getAllHotels());
+		model.addAttribute("hotel", hotel);
+		model.addAttribute("message", msg);
 		return model;
 	}
 }
