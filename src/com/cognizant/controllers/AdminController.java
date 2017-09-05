@@ -1,6 +1,7 @@
 package com.cognizant.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -44,15 +45,17 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/cities", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody ArrayList<City> citiesForCountry(
+	public @ResponseBody List<City> citiesForCountry(
 			@RequestParam(value = "countryId", required = true) int countryId) {
 		System.out.println(countryId + ".....");
 
-		Lists list1 = new Lists(staticDataDAO.getCitiesList(), countryId);
+		//Lists list1 = new Lists(staticDataDAO.getCitiesList(), countryId);
 		// Set<City> set = new TreeSet<City>();
 		// set.add(new City(1,1,"Pune"));
 		// set.addAll(list1.cityList);
-		return list1.cityList;
+		List<City> a = new ArrayList<>();
+		a.add(new City(1,1,"Pune"));
+		return a;
 	}
 
 	/*

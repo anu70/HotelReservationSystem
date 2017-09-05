@@ -186,7 +186,5 @@ public class CustomerController {
 				JOptionPane.showMessageDialog(null,"Error deleting booking.Please try again.");
 			return "redirect:/allBookings";
 		}
-		
-			
 	}
 }

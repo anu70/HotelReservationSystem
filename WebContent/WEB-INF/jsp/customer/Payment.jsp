@@ -60,8 +60,7 @@
 				<p class="contact">
 					<form:label path="atm_pin">ATM Pin</form:label>
 				</p>
-				<form:input path="atm_pin" required="required" type="text"
-					onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+				<form:password path="atm_pin" required="required" 
 					minlength="6" maxlength="6" />
 				<br>
 				<p class="contact">

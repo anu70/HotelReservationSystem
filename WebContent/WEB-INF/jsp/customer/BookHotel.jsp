@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,6 +9,12 @@
 <title>Book Hotel</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <link rel="stylesheet" type="text/css" href="css/demo.css" />
+<script type="text/javascript" src="css/jquery-3.2.1.js"></script>
+<script type="text/javascript"
+	src="<c:url value="css/jquery-3.2.1.js" />"></script>
+<script type="text/javascript">
+	window.scrollTo(0, 1);
+</script>
 </head>
 <body>
 	<div class="container">
@@ -22,6 +29,35 @@
 		</h1>
 		</header>
 		<div class="form">
+		<script type="text/javascript">
+				$(document)
+						.ready(
+								function() {
+									$('#startDate')
+											.change(
+													function() {
+														var startDate=$(this).val();
+														var nextDaydate = new Date(startDate);
+														nextDaydate.setDate(nextDaydate.getDate() + 1);
+														var next7Daydate = new Date(startDate);
+														next7Daydate.setDate(next7Daydate.getDate() + 7);
+														$('#endDate').attr('min',dateString(nextDaydate));
+														$('#endDate').attr('max',dateString(next7Daydate));
+													});
+								});
+				
+				function dateString(date){
+					var day = date.getDate()+"";
+					var mon = (date.getMonth()+1)+"";
+					var year = date.getFullYear()+"";
+					if(day.length==1)
+						day = "0"+day;
+					if(mon.length==1)
+						mon = "0"+mon;
+					var dateStr =  year+'-'+ mon +'-'+ day;
+					return dateStr;
+				}
+			</script> 
 			<form:form id="bookHotelPage" modelAttribute="booking"
 				action="reviewBooking" method="post">
 				<form:hidden path="id" value="${booking.id}"/>
@@ -37,11 +73,11 @@
 				<p class="contact">
 					<form:label path="start_date">From</form:label>
 				</p>
-				<form:input type="date" path="start_date" required="required" min="${todaysDate}"></form:input>
+				<form:input type="date" path="start_date" id="startDate" required="required" min="${todaysDate}"></form:input>
 				<p class="contact">
 					<form:label path="end_date">To</form:label>
 				</p>
-				<form:input type="date" path="end_date" required="required"></form:input>
+				<form:input type="date" path="end_date" id="endDate" required="required"></form:input>
 				<p class="contact">
 					<form:label path="ac_rooms_count">No. Of AC Rooms</form:label>
 				</p>

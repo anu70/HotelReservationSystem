@@ -76,6 +76,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public int makePayment(Payment payment) {
+		/*System.out.println(payment.getUser_id()+"  "+payment.getCard_type()+"  "+payment.getCredit_card_no()+"  "+
+						payment.getName_on_card()+"  "+ payment.getExpiry_date()+"  "+ payment.getCvv()+"  "+ payment.getAccount_no()+"  "+
+						payment.getAtm_pin()+"  "+ payment.isIs_senior_citizen()+"  "+payment.getStatus());*/
 		String sql = "INSERT INTO Payment(user_id,card_type,credit_card_no,name_on_card,expiry_date,cvv,account_no,atm_pin,is_senior_citizen,status) VALUES(?,?,?,?,?,?,?,?,?,?)";
 		int returnValue = getJdbcTemplate().update(sql,
 				new Object[] { payment.getUser_id(), payment.getCard_type(), payment.getCredit_card_no(),

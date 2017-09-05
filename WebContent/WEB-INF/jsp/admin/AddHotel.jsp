@@ -50,6 +50,7 @@
 															countryId : countryId1,
 															ajax : 'true'
 														}, function(data) {
+															console.log(data);
 															/* var html = '<option value="">City</option>';
 															var len = data.length;
 															for ( var i = 0; i < len; i++) {

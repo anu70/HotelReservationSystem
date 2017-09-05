@@ -9,6 +9,12 @@
 <title>Welcome</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <link rel="stylesheet" type="text/css" href="css/demo.css" />
+<script type="text/javascript" src="css/jquery-3.2.1.js"></script>
+<script type="text/javascript"
+	src="<c:url value="css/jquery-3.2.1.js" />"></script>
+<script type="text/javascript">
+	window.scrollTo(0, 1);
+</script>
 </head>
 <body>
 	<div class="container">
@@ -31,6 +37,33 @@
 		</h1>
 		</header>
 		<div class="form">
+		<script type="text/javascript">
+				$(document)
+						.ready(
+								function() {
+									$('#startDate')
+											.change(
+													function() {
+														var startDate=$(this).val();
+														var nextDaydate = new Date(startDate);
+														nextDaydate.setDate(nextDaydate.getDate() + 1);
+														$('#endDate').attr('min',dateString(nextDaydate));
+													});
+								});
+				
+				function dateString(date){
+					var day = date.getDate()+"";
+					var mon = (date.getMonth()+1)+"";
+					var year = date.getFullYear()+"";
+					if(day.length==1)
+						day = "0"+day;
+					if(mon.length==1)
+						mon = "0"+mon;
+					var dateStr =  year+'-'+ mon +'-'+ day;
+					return dateStr;
+				}
+			</script> 
+			
 			<form:form id="hotelSearchForm" modelAttribute="trip"
 				action="availableHotels" method="post">
 				<p class="contact">
@@ -52,11 +85,11 @@
 				<p class="contact">
 					<form:label path="startDate">From</form:label>
 				</p>
-				<form:input type="date" path="startDate" required="required" min="${todaysDate}"></form:input>
+				<form:input type="date" path="startDate" id="startDate" required="required" min="${todaysDate}"></form:input>
 				<p class="contact">
 					<form:label path="endDate">To</form:label>
 				</p>
-				<form:input type="date" path="endDate" required="required"></form:input>
+				<form:input type="date" path="endDate" id="endDate" required="required"></form:input>
 
 				
 				<input class="buttom" value="Search" type="submit" />

@@ -12,6 +12,7 @@ public class PaymentMapper implements RowMapper<Payment>{
 	@Override
 	public Payment mapRow(ResultSet result, int arg1) throws SQLException {
 		Payment payment = new Payment();
+		payment.setId(result.getInt("id"));
 		payment.setUser_id(result.getInt("user_id"));
 		payment.setCard_type(result.getString("card_type"));
 		payment.setCredit_card_no(result.getBigDecimal("credit_card_no").toBigInteger());
