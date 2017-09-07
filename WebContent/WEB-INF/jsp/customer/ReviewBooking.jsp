@@ -25,14 +25,14 @@
 			<form:form id="reviewBookingPage" modelAttribute="booking"
 				action="makePayment" method="post">
 				<form:hidden path="id" value="${booking.id}"/>
-				<h2>You are booking: ${hotel.hotelName} 
+				<h2><b>You are booking:</b> ${hotel.hotelName} 
 				<input type="submit" name="action" value="edit" />
 
-				<h2>Total AC Rooms: ${booking.ac_rooms_count}</h2><br>
+				<h2><b>Total AC Rooms:</b> ${booking.ac_rooms_count}</h2><br>
 
-				<h2>Total Non-AC Rooms: ${booking.non_ac_rooms_count}</h2><br>
-				<h2>From: ${booking.start_date}       To: ${booking.end_date}</h2><br>
-				<h2>Total Cost: ${totalCost}</h2><br><br>
+				<h2><b>Total Non-AC Rooms:</b> ${booking.non_ac_rooms_count}</h2><br>
+				<h2><b>From:</b> ${booking.start_date}       <b>To:</b> ${booking.end_date}</h2><br>
+				<h2><b>Total Cost:</b> ${totalCost}</h2><br><br>
 				<input class="buttom" type="submit" name="action" value="Pay Now" />
 			</form:form>
 		</div>

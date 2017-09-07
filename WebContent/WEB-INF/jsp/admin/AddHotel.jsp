@@ -33,38 +33,24 @@
 		</h1>
 		</header>
 		<div class="form">
-			 <c:url var="findCountryCitiesURL" value="/cities" />
-
+			<c:url var="findCountryCitiesURL" value="/cities" />
 			<script type="text/javascript">
-				$(document)
-						.ready(
-								function() {
-									$('#countryDropDown')
-											.change(
-													function() {
-														
-														var countryId1 = $(this).val();
-														//alert(countryId1);
-														
-														$.getJSON('${findCountryCitiesURL}', {
-															countryId : countryId1,
-															ajax : 'true'
-														}, function(data) {
-															console.log(data);
-															/* var html = '<option value="">City</option>';
-															var len = data.length;
-															for ( var i = 0; i < len; i++) {
-																html += '<option value="' + data[i].name + '">'
-																		+ data[i].name + '</option>';
-															}
-															html += '</option>';
+				$(document).ready(function() {
+					$('#countryDropDown').change(function() {
 
-															$('#cityDropDown').html(html); */
-														});
-														
-													});
-								});
-			</script> 
+						var countryId = $(this).val();
+						$('#cityDropDown').empty();
+						<c:forEach var="city" items="${citiesList}" varStatus="status">
+						if ("${city.country_id}" == countryId) {
+							$('#cityDropDown').append($('<option>', {
+								value : "${city.id}",
+								text : "${city.name}"
+							}));
+						}
+						</c:forEach>
+					});
+				});
+			</script>
 
 			<h4>
 				<span style="color: red">${message}</span><br> <br>
@@ -93,10 +79,9 @@
 				<p class="contact">
 					<form:label path="cityId">City</form:label>
 				</p>
-				<form:select class="select-style" id="cityDropDown" path="cityId"
-					items="${citiesList}" itemValue="id" itemLabel="name"
-					cssStyle="width:420px">
-					<form:option value="">City</form:option>
+				<form:select class="select-style" id="cityDropDown"
+					name="cityDropDown" path="cityId" cssStyle="width:420px">
+
 				</form:select>
 
 

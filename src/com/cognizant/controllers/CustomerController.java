@@ -1,5 +1,7 @@
 package com.cognizant.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -106,8 +108,22 @@ public class CustomerController {
 			model.addAttribute("trip", Global.trip);
 			return "redirect:/availableHotels";
 		}
-		int totalCost = booking.getAc_rooms_count() * Global.hotel.getRateAdultAC()
-				+ booking.getNon_ac_rooms_count() * Global.hotel.getRateAdultNonAC();
+		try {
+			System.out.println(new SimpleDateFormat("yyyy-dd-MM").parse(booking.getEnd_date()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*int daysCount=1;
+		Date startDate = new Date(booking.getStart_date());
+		Calendar time  = Calendar.getInstance();
+		time.set(Calendar.HOUR_OF_DAY, 0);
+		time.set(Calendar.MINUTE, 0);
+		time.set(Calendar.SECOND, 0);
+		time.set(Calendar.MILLISECOND, 0);
+		startDate = time.getTime();*/
+		int totalCost = (booking.getAc_rooms_count() * Global.hotel.getRateAdultAC()
+				+ booking.getNon_ac_rooms_count() * Global.hotel.getRateAdultNonAC());
 		model.addAttribute("totalCost", totalCost);
 
 		booking.setUser_id(Global.user.getId());
@@ -170,7 +186,7 @@ public class CustomerController {
 
 	@RequestMapping(value="/changeBooking",method=RequestMethod.POST)
 	public String changeBooking(@ModelAttribute("booking") Booking booking,@RequestParam String action,ModelMap model){
-		System.out.println(booking.getHotel_id());
+		//System.out.println(booking.getHotel_id());
 		Global.getInstance().setHotel(objectFromIdDAO.getHotelWithId(booking.getHotel_id()));
 		if(action.equals("edit")){
 			Global.getInstance();

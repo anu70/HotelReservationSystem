@@ -61,14 +61,15 @@
 			<form:form id="bookHotelPage" modelAttribute="booking"
 				action="reviewBooking" method="post">
 				<form:hidden path="id" value="${booking.id}"/>
-				<h3>You are booking: ${hotel.hotelName}</h3>
+				<p class="contact">
+				<h3><b>You are booking: </b><br>${hotel.hotelName}</h3>
 				<br>
 
-				<h3>Cost of AC Room: ${hotel.rateAdultAC}/${hotel.rateChildAC}</h3>
+				<h3><b>Cost of AC Room:</b><br> Adult: Rs.${hotel.rateAdultAC} Child: Rs.${hotel.rateChildAC}</h3>
 				<br>
 
-				<h3>Cost of Non-AC Room: ${hotel.rateAdultNonAC}/
-					${hotel.rateChildNonAC}</h3>
+				<h3><b>Cost of Non-AC Room</b><br> Adult: Rs.${hotel.rateAdultNonAC} Child: 
+					Rs.${hotel.rateChildNonAC}</h3>
 				<br>
 				<p class="contact">
 					<form:label path="start_date">From</form:label>
@@ -86,8 +87,7 @@
 					<form:label path="non_ac_rooms_count">No. Of Non-AC Rooms</form:label>
 				</p>
 				<form:input type="number" path="non_ac_rooms_count" required="required" min="0" max="${hotel.leftNonACRoom}"></form:input>
-				<p class="contact">${hotel.description}</p>
-				<br>
+				
 				<p class="contact">
 					<form:label  path="adults_count" >No. of Adults</form:label>
 				</p>
@@ -96,7 +96,11 @@
 					<form:label  path="child_count" >No. of Child</form:label>
 				</p>
 				<form:input type="number" path="child_count" min="0" required="required"></form:input><br>
+				<b>Description:</b> <br>
+				<p class="contact">${hotel.description}</p>
+				
 				<input class="buttom" type="submit" name="action" value="Book Now" />
+				<br>
 			</form:form>
 		</div>
 </body>

@@ -38,32 +38,10 @@ public class AdminController {
 		if (!Global.user.getRole().equals("admin"))
 			return "NotAuthorized";
 		model.addAttribute("hotel", new Hotel());
-		Lists list1 = new Lists(staticDataDAO.getCitiesList(), 1);
-		model.addAttribute("citiesList", list1.cityList);
+		model.addAttribute("citiesList", staticDataDAO.getCitiesList());
 		model.addAttribute("countriesList", staticDataDAO.getCountriesList());
 		return "admin/AddHotel";
 	}
-
-	@RequestMapping(value = "/cities", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<City> citiesForCountry(
-			@RequestParam(value = "countryId", required = true) int countryId) {
-		System.out.println(countryId + ".....");
-
-		//Lists list1 = new Lists(staticDataDAO.getCitiesList(), countryId);
-		// Set<City> set = new TreeSet<City>();
-		// set.add(new City(1,1,"Pune"));
-		// set.addAll(list1.cityList);
-		List<City> a = new ArrayList<>();
-		a.add(new City(1,1,"Pune"));
-		return a;
-	}
-
-	/*
-	 * @RequestMapping(value = "/countries", method = RequestMethod.GET)
-	 * public @ResponseBody Set<Country> findAllStates() { Set<Country> set =
-	 * new TreeSet<Country>(); set.addAll(staticDataDAO.getCountriesList());
-	 * return set; }
-	 */
 
 	@RequestMapping(value = "/processAddHotel", params = "submitButton", method = RequestMethod.POST)
 	public String processAddHotel(@ModelAttribute("hotel") Hotel hotel, ModelMap model) {
@@ -195,7 +173,7 @@ public class AdminController {
 				JOptionPane.showMessageDialog(null, "This hotel have future booking so you can't delete it.");
 				return "redirect:/deleteHotel";
 			} else if (errorCode == 1) {
-				JOptionPane.showMessageDialog(null, "Hotel Successfully Deleted");
+				//JOptionPane.showMessageDialog(null, "Hotel Successfully Deleted");
 				Global.getInstance();
 				model.addAttribute("username", Global.user.getUsername());
 				return "admin/WelcomeAdmin";
@@ -212,8 +190,7 @@ public class AdminController {
 	public ModelMap addHotelScreenWithErrorMsg(String msg, ModelMap model, Hotel hotel) {
 		model.addAttribute("hotel", hotel);
 		model.addAttribute("message", msg);
-		Lists list1 = new Lists(staticDataDAO.getCitiesList(), 1);
-		model.addAttribute("citiesList", list1.cityList);
+		model.addAttribute("citiesList", staticDataDAO.getCitiesList());
 		model.addAttribute("countriesList", staticDataDAO.getCountriesList());
 		return model;
 	}
