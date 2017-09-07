@@ -1,8 +1,5 @@
 package com.cognizant.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +8,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cognizant.DAO.AdminDAO;
 import com.cognizant.DAO.StaticDataDAO;
-import com.cognizant.models.City;
 import com.cognizant.models.Hotel;
-import com.cognizant.models.Lists;
 import com.cognizant.utils.Global;
 
 @Controller
@@ -105,8 +98,11 @@ public class AdminController {
 
 		if (!Global.user.getRole().equals("admin"))
 			return "NotAuthorized";
-
-		model.addAttribute("hotel", new Hotel());
+		
+		if(adminDAO.getAllHotels().size()>0)
+			model.addAttribute("hotel",adminDAO.getAllHotels().get(0));
+		else
+			model.addAttribute("hotel", new Hotel());
 		model.addAttribute("hotelsList", adminDAO.getAllHotels());
 		return "admin/EditHotel";
 	}
@@ -159,7 +155,10 @@ public class AdminController {
 		if (!Global.user.getRole().equals("admin"))
 			return "NotAuthorized";
 
-		model.addAttribute("hotel", new Hotel());
+		if(adminDAO.getAllHotels().size()>0)
+			model.addAttribute("hotel",adminDAO.getAllHotels().get(0));
+		else
+			model.addAttribute("hotel", new Hotel());
 		model.addAttribute("hotelsList", adminDAO.getAllHotels());
 		return "admin/DeleteHotel";
 	}
@@ -173,7 +172,7 @@ public class AdminController {
 				JOptionPane.showMessageDialog(null, "This hotel have future booking so you can't delete it.");
 				return "redirect:/deleteHotel";
 			} else if (errorCode == 1) {
-				//JOptionPane.showMessageDialog(null, "Hotel Successfully Deleted");
+				JOptionPane.showMessageDialog(null, "Hotel Successfully Deleted");
 				Global.getInstance();
 				model.addAttribute("username", Global.user.getUsername());
 				return "admin/WelcomeAdmin";
