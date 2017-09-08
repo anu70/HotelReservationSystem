@@ -1,6 +1,6 @@
 package com.cognizant.controllers;
 
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cognizant.DAO.AdminDAO;
 import com.cognizant.DAO.StaticDataDAO;
+import com.cognizant.models.City;
+import com.cognizant.models.Country;
 import com.cognizant.models.Hotel;
 import com.cognizant.utils.Global;
 
@@ -31,8 +33,13 @@ public class AdminController {
 		if (!Global.user.getRole().equals("admin"))
 			return "NotAuthorized";
 		model.addAttribute("hotel", new Hotel());
+		ArrayList<Country> countryList = staticDataDAO.getCountriesList();
+		if(countryList.size()>0)
+			model.addAttribute("startCountrycitiesList", staticDataDAO.getCitesOfCountry(countryList.get(0).getId()));
+		else
+			model.addAttribute("startCountrycitiesList",new ArrayList<City>());
 		model.addAttribute("citiesList", staticDataDAO.getCitiesList());
-		model.addAttribute("countriesList", staticDataDAO.getCountriesList());
+		model.addAttribute("countriesList", countryList);
 		return "admin/AddHotel";
 	}
 
@@ -42,50 +49,47 @@ public class AdminController {
 				|| !hotel.getHotelId().substring(3).matches("\\d+")) {
 			model = addHotelScreenWithErrorMsg(
 					"Hotel first 3 characters should be alphabets from hotel name and last 4 characters should be numbers",
-					model, hotel);
+					"", 0, model, hotel);
 			return "admin/AddHotel";
 		}
 		if (hotel.getAcRoomsCount() > 300 || hotel.getNonACRoomsCount() > 300) {
-			model = addHotelScreenWithErrorMsg("No of rooms should be less than 300", model, hotel);
+			model = addHotelScreenWithErrorMsg("No of rooms should be less than 300", "", 0, model, hotel);
 			return "admin/AddHotel";
 		}
 		if (hotel.getRateAdultAC() < 2500 || hotel.getRateAdultAC() > 4000) {
-			model = addHotelScreenWithErrorMsg("Rate of AC Room for adults should be between Rs.2500 - Rs.4000 ", model,
-					hotel);
+			model = addHotelScreenWithErrorMsg("Rate of AC Room for adults should be between Rs.2500 - Rs.4000 ", "", 0,
+					model, hotel);
 			return "admin/AddHotel";
 		}
 		if (hotel.getRateAdultNonAC() < 2000 || hotel.getRateAdultNonAC() > 2500) {
-			model = addHotelScreenWithErrorMsg("Rate of Non-AC Room for adults should be between Rs.2000 - Rs.2500",
-					model, hotel);
+			model = addHotelScreenWithErrorMsg("Rate of Non-AC Room for adults should be between Rs.2000 - Rs.2500", "",
+					0, model, hotel);
 			return "admin/AddHotel";
 		}
 		if (hotel.getRateChildAC() < 2000 || hotel.getRateChildAC() > 3000) {
-			model = addHotelScreenWithErrorMsg("Rate of AC Room for child should be between Rs.2000 - Rs.3000", model,
-					hotel);
+			model = addHotelScreenWithErrorMsg("Rate of AC Room for child should be between Rs.2000 - Rs.3000", "", 0,
+					model, hotel);
 			return "admin/AddHotel";
 		}
 		if (hotel.getRateChildNonAC() < 1000 || hotel.getRateChildNonAC() > 2000) {
-			model = addHotelScreenWithErrorMsg("Rate of Non-AC Room for child should be between Rs.1000 - Rs.2000",
-					model, hotel);
+			model = addHotelScreenWithErrorMsg("Rate of Non-AC Room for child should be between Rs.1000 - Rs.2000", "",
+					0, model, hotel);
 			return "admin/AddHotel";
 		}
 		int errorCode = adminDAO.addHotel(hotel);
 		if (errorCode == 2) {
-			JOptionPane.showMessageDialog(null,
-					"Hotel with the hotel id:" + hotel.getHotelId() + " already exist.Please enter another hotel id");
-
-			model = addHotelScreenWithErrorMsg("", model, hotel);
+			model = addHotelScreenWithErrorMsg(
+					"Hotel with the hotel id:" + hotel.getHotelId() + " already exist.Please enter another hotel id",
+					"", 0, model, hotel);
 			return "admin/AddHotel";
 		}
 
 		if (errorCode == 1) {
-			JOptionPane.showMessageDialog(null, "Hotel successfully added.Hotel id: " + hotel.getHotelId());
-			Global.getInstance();
-			model.addAttribute("username", Global.user.getUsername());
-			return "admin/WelcomeAdmin";
+			model = addHotelScreenWithErrorMsg("", "Hotel successfully added.Hotel id: " + hotel.getHotelId(), 0, model, hotel);
+			return "admin/AddHotel";
 		} else {
-			JOptionPane.showMessageDialog(null, "Error adding hotel.Please try again");
-			return "redirect:/addHotel";
+			model = addHotelScreenWithErrorMsg("", "Error adding hotel.Please try again", 1, model, hotel);
+			return "admin/AddHotel";
 		}
 	}
 
@@ -98,9 +102,9 @@ public class AdminController {
 
 		if (!Global.user.getRole().equals("admin"))
 			return "NotAuthorized";
-		
-		if(adminDAO.getAllHotels().size()>0)
-			model.addAttribute("hotel",adminDAO.getAllHotels().get(0));
+
+		if (adminDAO.getAllHotels().size() > 0)
+			model.addAttribute("hotel", adminDAO.getAllHotels().get(0));
 		else
 			model.addAttribute("hotel", new Hotel());
 		model.addAttribute("hotelsList", adminDAO.getAllHotels());
@@ -110,38 +114,37 @@ public class AdminController {
 	@RequestMapping(value = "/processEditHotel", method = RequestMethod.POST)
 	public String processEditHotel(@ModelAttribute("hotel") Hotel hotel, ModelMap model) {
 		if (hotel.getAcRoomsCount() > 300 || hotel.getNonACRoomsCount() > 300) {
-			model = editHotelScreenWithErrorMsg("No of rooms should be less than 300", model, hotel);
+			model = editHotelScreenWithErrorMsg("No of rooms should be less than 300", "", 0, model, hotel);
 			return "admin/EditHotel";
 		}
 		if (hotel.getRateAdultAC() < 2500 || hotel.getRateAdultAC() > 4000) {
-			model = editHotelScreenWithErrorMsg("Rate of AC Room for adults should be between Rs.2500 - Rs.4000 ", model,
-					hotel);
+			model = editHotelScreenWithErrorMsg("Rate of AC Room for adults should be between Rs.2500 - Rs.4000 ", "",
+					0, model, hotel);
 			return "admin/EditHotel";
 		}
 		if (hotel.getRateAdultNonAC() < 2000 || hotel.getRateAdultNonAC() > 2500) {
 			model = editHotelScreenWithErrorMsg("Rate of Non-AC Room for adults should be between Rs.2000 - Rs.2500",
-					model, hotel);
+					"", 0, model, hotel);
 			return "admin/EditHotel";
 		}
 		if (hotel.getRateChildAC() < 2000 || hotel.getRateChildAC() > 3000) {
-			model = editHotelScreenWithErrorMsg("Rate of AC Room for child should be between Rs.2000 - Rs.3000", model,
-					hotel);
+			model = editHotelScreenWithErrorMsg("Rate of AC Room for child should be between Rs.2000 - Rs.3000", "", 0,
+					model, hotel);
 			return "admin/EditHotel";
 		}
 		if (hotel.getRateChildNonAC() < 1000 || hotel.getRateChildNonAC() > 2000) {
-			model = editHotelScreenWithErrorMsg("Rate of Non-AC Room for child should be between Rs.1000 - Rs.2000",
-					model, hotel);
+			model = editHotelScreenWithErrorMsg("Rate of Non-AC Room for child should be between Rs.1000 - Rs.2000", "",
+					0, model, hotel);
 			return "admin/EditHotel";
 		}
 		int errorCode = adminDAO.editHotel(hotel);
 		if (errorCode == 1) {
 			Global.getInstance();
-			JOptionPane.showMessageDialog(null, "Hotel successfully edited");
-			model.addAttribute("username", Global.user.getUsername());
-			return "admin/WelcomeAdmin";
+			model = editHotelScreenWithErrorMsg("", "Hotel Successfully Edited", 0, model, hotel);
+			return "admin/EditHotel";
 		} else {
-			JOptionPane.showMessageDialog(null, "Error editing hotel.Please try again");
-			return "redirect:/editHotel";
+			model = editHotelScreenWithErrorMsg("", "Error editing hotel.Please try again", 1, model, hotel);
+			return "admin/EditHotel";
 		}
 	}
 
@@ -155,8 +158,8 @@ public class AdminController {
 		if (!Global.user.getRole().equals("admin"))
 			return "NotAuthorized";
 
-		if(adminDAO.getAllHotels().size()>0)
-			model.addAttribute("hotel",adminDAO.getAllHotels().get(0));
+		if (adminDAO.getAllHotels().size() > 0)
+			model.addAttribute("hotel", adminDAO.getAllHotels().get(0));
 		else
 			model.addAttribute("hotel", new Hotel());
 		model.addAttribute("hotelsList", adminDAO.getAllHotels());
@@ -165,39 +168,61 @@ public class AdminController {
 
 	@RequestMapping(value = "/processDeleteHotel", method = RequestMethod.POST)
 	public String processDeleteHotel(@ModelAttribute("hotel") Hotel hotel, ModelMap model) {
-		int reply = JOptionPane.showConfirmDialog(null,"Are you sure you want to delete this hotel","Delete Hotel", JOptionPane.YES_NO_OPTION);
-		if (reply == JOptionPane.YES_OPTION) {
+		/*int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this hotel", "Delete Hotel",
+				JOptionPane.YES_NO_OPTION);*/
+		/*if (reply == JOptionPane.YES_OPTION) {*/
 			int errorCode = adminDAO.deleteHotel(hotel);
 			if (errorCode == 2) {
-				JOptionPane.showMessageDialog(null, "This hotel have future booking so you can't delete it.");
-				return "redirect:/deleteHotel";
+				model = deleteHotelScreenWithErrorMsg("This hotel have future booking so you can't delete it.",1,model,hotel);
+				return "admin/DeleteHotel";
 			} else if (errorCode == 1) {
-				JOptionPane.showMessageDialog(null, "Hotel Successfully Deleted");
-				Global.getInstance();
-				model.addAttribute("username", Global.user.getUsername());
-				return "admin/WelcomeAdmin";
+				model = deleteHotelScreenWithErrorMsg("Hotel Successfully Deleted",0,model,hotel);
+				return "admin/DeleteHotel";
 			} else {
-				JOptionPane.showMessageDialog(null, "Error Deleting Hotel");
-				return "redirect:/deleteHotel";
+				model = deleteHotelScreenWithErrorMsg("Error Deleting Hotel.Please try again",1,model,hotel);
+				return "admin/DeleteHotel";
 			}
-		} else {
+		/*}*/ /*else {
 			return "redirect:/deleteHotel";
-		}
-		
+		}*/
+
 	}
 
-	public ModelMap addHotelScreenWithErrorMsg(String msg, ModelMap model, Hotel hotel) {
+	public ModelMap addHotelScreenWithErrorMsg(String msg, String alertMsg, int errorCode, ModelMap model,
+			Hotel hotel) {
 		model.addAttribute("hotel", hotel);
 		model.addAttribute("message", msg);
+		model.addAttribute("alertMessage", alertMsg);
+		model.addAttribute("errorCode", errorCode);
+		ArrayList<Country> countryList = staticDataDAO.getCountriesList();
+		if(countryList.size()>0)
+			model.addAttribute("1stCountrycitiesList", staticDataDAO.getCitesOfCountry(countryList.get(0).getId()));
+		else
+			model.addAttribute("1stCountrycitiesList","");
 		model.addAttribute("citiesList", staticDataDAO.getCitiesList());
-		model.addAttribute("countriesList", staticDataDAO.getCountriesList());
+		model.addAttribute("countriesList", countryList);
 		return model;
 	}
-	
-	public ModelMap editHotelScreenWithErrorMsg(String msg, ModelMap model, Hotel hotel){
+
+	public ModelMap editHotelScreenWithErrorMsg(String msg, String alertMsg, int errorCode, ModelMap model,
+			Hotel hotel) {
 		model.addAttribute("hotelsList", adminDAO.getAllHotels());
 		model.addAttribute("hotel", hotel);
 		model.addAttribute("message", msg);
+		model.addAttribute("alertMessage", alertMsg);
+		model.addAttribute("errorCode", errorCode);
+		return model;
+	}
+	
+	public ModelMap deleteHotelScreenWithErrorMsg(String alertMsg, int errorCode, ModelMap model,
+			Hotel hotel) {
+		if (adminDAO.getAllHotels().size() > 0)
+			model.addAttribute("hotel", adminDAO.getAllHotels().get(0));
+		else
+			model.addAttribute("hotel", new Hotel());
+		model.addAttribute("hotelsList", adminDAO.getAllHotels());
+		model.addAttribute("alertMessage", alertMsg);
+		model.addAttribute("errorCode", errorCode);
 		return model;
 	}
 }

@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,7 +9,12 @@
 <title>Registration</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <link rel="stylesheet" type="text/css" href="css/demo.css" />
-
+<script type="text/javascript" src="css/jquery-3.2.1.js"></script>
+<script type="text/javascript"
+	src="<c:url value="css/jquery-3.2.1.js" />"></script>
+<script type="text/javascript">
+	window.scrollTo(0, 1);
+</script>
 <script type="text/javascript"
 	src="<c:url value="/resources/jquery/1.6/jquery-1.6.1.min.js" />"></script>
 </head>
@@ -27,11 +33,26 @@
 			<span>Hotel Reservation System</span> Registration Form
 		</h1>
 		</header>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#countryDropDown').change(function() {
 
+					var countryId = $(this).val();
+					$('#cityDropDown').empty();
+					<c:forEach var="city" items="${citiesList}" varStatus="status">
+					if ("${city.country_id}" == countryId) {
+						$('#cityDropDown').append($('<option>', {
+							value : "${city.id}",
+							text : "${city.name}"
+						}));
+					}
+					</c:forEach>
+				});
+			});
+		</script>
 		<div class="form">
 			<h4>
-				<span style="color: red">${message}</span><br>
-				<br>
+				<span style="color: red">${message}</span><br> <br>
 			</h4>
 			<form:form id="registrationForm" modelAttribute="user"
 				action="processRegistration" method="post">
@@ -61,16 +82,17 @@
 				<p class="contact">
 					<form:label path="country">Country</form:label>
 				</p>
-				<form:select class="select-style" path="country"
-					items="${countriesList}" itemValue="id" itemLabel="name"
-					cssStyle="width:420px"></form:select>
+				<form:select class="select-style" id="countryDropDown"
+					path="country" items="${countriesList}" itemValue="id"
+					required="required" itemLabel="name" cssStyle="width:420px"></form:select>
 				<br>
 				<br>
 				<p class="contact">
 					<form:label path="city">City</form:label>
 				</p>
-				<form:select class="select-style" path="city" items="${citiesList}"
-					itemValue="id" itemLabel="name" cssStyle="width:420px"></form:select>
+				<form:select class="select-style" id="cityDropDown" path="city"
+					items="${startCountrycitiesList}" itemValue="id" itemLabel="name"
+					required="required" cssStyle="width:420px"></form:select>
 				<br>
 				<br>
 				<p class="contact">
@@ -82,7 +104,7 @@
 				<p class="contact">
 					<form:label path="dob">Date Of Birth</form:label>
 				</p>
-				<form:input type="date" path="dob" required="required"/>
+				<form:input type="date" path="dob" required="required" />
 				<p class="contact">
 					<form:label path="pincode">Pincode</form:label>
 				</p>
@@ -97,7 +119,4 @@
 	</div>
 
 </body>
-<script>
-	$("#someinput").attr('required', '');
-</script>
 </html>

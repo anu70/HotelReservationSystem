@@ -1,5 +1,7 @@
 package com.cognizant.controllers;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cognizant.DAO.StaticDataDAO;
 import com.cognizant.DAO.UserDAO;
+import com.cognizant.models.City;
+import com.cognizant.models.Country;
 import com.cognizant.models.User;
 import com.cognizant.utils.Global;
 
@@ -27,8 +31,13 @@ public class RegisterController {
 		Global.getInstance();
 		model.addAttribute("user", new User());	
 		model.addAttribute("rolesList",Global.rolesList);
-		model.addAttribute("countriesList",staticDataDAO.getCountriesList());
-		model.addAttribute("citiesList",staticDataDAO.getCitiesList());
+		ArrayList<Country> countryList = staticDataDAO.getCountriesList();
+		if(countryList.size()>0)
+			model.addAttribute("startCountrycitiesList", staticDataDAO.getCitesOfCountry(countryList.get(0).getId()));
+		else
+			model.addAttribute("startCountrycitiesList",new ArrayList<City>());
+		model.addAttribute("citiesList", staticDataDAO.getCitiesList());
+		model.addAttribute("countriesList", countryList);
 		return "RegistrationForm";                                                                                                                                                                                                                    
 	}
 	
@@ -52,8 +61,13 @@ public class RegisterController {
 	public ModelMap registrationScreenWithErrorMsg(ModelMap model,User user,String msg){
 		model.addAttribute("user", user);	
 		model.addAttribute("rolesList",Global.rolesList);
-		model.addAttribute("countriesList",staticDataDAO.getCountriesList());
-		model.addAttribute("citiesList",staticDataDAO.getCitiesList());
+		ArrayList<Country> countryList = staticDataDAO.getCountriesList();
+		if(countryList.size()>0)
+			model.addAttribute("startCountrycitiesList", staticDataDAO.getCitesOfCountry(countryList.get(0).getId()));
+		else
+			model.addAttribute("startCountrycitiesList",new ArrayList<City>());
+		model.addAttribute("citiesList", staticDataDAO.getCitiesList());
+		model.addAttribute("countriesList", countryList);
     	model.addAttribute("message",msg);
     	return model;
 	}

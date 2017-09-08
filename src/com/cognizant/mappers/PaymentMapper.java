@@ -23,6 +23,7 @@ public class PaymentMapper implements RowMapper<Payment>{
 		payment.setAtm_pin(result.getInt("atm_pin"));
 		payment.setIs_senior_citizen(result.getBoolean("is_senior_citizen"));
 		payment.setStatus(result.getInt("status"));
+		payment.setBank_name(result.getString("bank_name"));
 		return payment;
 	}
 

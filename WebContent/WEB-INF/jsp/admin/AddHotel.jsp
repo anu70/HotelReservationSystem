@@ -33,7 +33,16 @@
 		</h1>
 		</header>
 		<div class="form">
-			<c:url var="findCountryCitiesURL" value="/cities" />
+			<script type="text/javascript">
+				if ("${alertMessage}" === "") {
+
+				} else {
+					alert("${alertMessage}");
+					if ("${errorCode}" == 0)
+						window.location = 'welcomeAdmin';
+
+				}
+			</script>
 			<script type="text/javascript">
 				$(document).ready(function() {
 					$('#countryDropDown').change(function() {
@@ -70,7 +79,7 @@
 					<form:label path="countryId">Country</form:label>
 				</p>
 
-				<form:select class="select-style" id="countryDropDown"
+				<form:select class="select-style" id="countryDropDown" required="required"
 					items="${countriesList}" itemValue="id" itemLabel="name"
 					path="countryId" cssStyle="width:420px">
 				</form:select>
@@ -79,7 +88,8 @@
 				<p class="contact">
 					<form:label path="cityId">City</form:label>
 				</p>
-				<form:select class="select-style" id="cityDropDown"
+				<form:select class="select-style" id="cityDropDown" required="required"
+				items="${startCountrycitiesList}" itemValue="id" itemLabel="name"
 					name="cityDropDown" path="cityId" cssStyle="width:420px">
 
 				</form:select>

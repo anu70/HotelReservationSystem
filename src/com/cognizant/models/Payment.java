@@ -14,11 +14,13 @@ public class Payment {
 	int atm_pin;
 	boolean is_senior_citizen;
 	int status;
-	
+	String bank_name;
 	public Payment(){}
 
+	
 	public Payment(int id, int user_id, String card_type, BigInteger credit_card_no, String name_on_card,
-			String expiry_date, int cvv, BigInteger account_no, int atm_pin, boolean is_senior_citizen, int status) {
+			String expiry_date, int cvv, BigInteger account_no, int atm_pin, boolean is_senior_citizen, int status,
+			String bank_name) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
@@ -31,7 +33,9 @@ public class Payment {
 		this.atm_pin = atm_pin;
 		this.is_senior_citizen = is_senior_citizen;
 		this.status = status;
+		this.bank_name = bank_name;
 	}
+
 
 	public int getId() {
 		return id;
@@ -119,6 +123,16 @@ public class Payment {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+
+	public String getBank_name() {
+		return bank_name;
+	}
+
+
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
 	}
 	
 }

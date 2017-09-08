@@ -25,6 +25,12 @@
 			<form:form id="paymentForm" modelAttribute="payment"
 				action="bookingSuccessful" method="post">
 				<p class="contact">
+					<form:label path="bank_name">Bank Name:</form:label>
+				</p>
+				<form:input path="bank_name" maxlength="45"
+					required="required"></form:input> 
+					
+				<p class="contact">
 					<form:label path="card_type">Credit Card Type</form:label>
 				</p>
 				<form:select class="select-style" path="card_type"

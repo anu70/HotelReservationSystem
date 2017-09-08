@@ -36,4 +36,11 @@ public class StaticDataDAOImpl implements StaticDataDAO{
 		return (ArrayList<City>) cities;
 	}
 
+	@Override
+	public ArrayList<City> getCitesOfCountry(int countryId) {
+		String sql = "Select * from City WHERE country_id=?";
+		List<City> cities =  getJdbcTemplate().query(sql,new Object[] {countryId},new CityMapper());
+		return (ArrayList<City>) cities;
+	}
+
 }

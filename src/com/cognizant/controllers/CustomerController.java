@@ -4,8 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -46,8 +44,13 @@ public class CustomerController {
 		}
 		model.addAttribute("trip", new Trip());
 		model.addAttribute("username", Global.user.getUsername());
+		ArrayList<Country> countryList = staticDataDAO.getCountriesList();
+		if(countryList.size()>0)
+			model.addAttribute("startCountrycitiesList", staticDataDAO.getCitesOfCountry(countryList.get(0).getId()));
+		else
+			model.addAttribute("startCountrycitiesList",new ArrayList<City>());
 		model.addAttribute("citiesList", staticDataDAO.getCitiesList());
-		model.addAttribute("countriesList", staticDataDAO.getCountriesList());
+		model.addAttribute("countriesList", countryList);
 		model.addAttribute("todaysDate",Global.todaysDate);
 		return "customer/WelcomeCustomer";
 	}
@@ -165,6 +168,7 @@ public class CustomerController {
 		Global.getInstance();
 		model.addAttribute("BookingId", bookingId);
 		model.addAttribute("TransactionId", transactionId);
+		model.addAttribute("payment",payment);
 		return "customer/BookingSuccessful";
 	}
 
@@ -197,10 +201,26 @@ public class CustomerController {
 		else{
 			int success = customerDAO.cancelBooking(booking);
 			if(success==1)
-				JOptionPane.showMessageDialog(null,"booking successfully cancelled ");
+				return allBookingPageWithAlertMessage(model,"booking successfully cancelled ",0);
 			else
-				JOptionPane.showMessageDialog(null,"Error deleting booking.Please try again.");
-			return "redirect:/allBookings";
+				return allBookingPageWithAlertMessage(model,"Error deleting booking.Please try again.",1);
 		}
+	}
+	
+	public String allBookingPageWithAlertMessage(ModelMap model,String alertMsg, int errorCode){
+		Global.getInstance();
+		if (Global.user == null)
+			return "redirect:/login";
+		ArrayList<Booking> bookings = customerDAO.getAllBookings(Global.user);
+		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+		for(int i=0;i<bookings.size();i++){
+			hotels.add(objectFromIdDAO.getHotelWithId(bookings.get(i).getHotel_id()));
+		}
+		model.addAttribute("bookingsList", bookings);
+		model.addAttribute("hotelsList",hotels);
+		model.addAttribute("booking", new Booking());
+		model.addAttribute("alertMessage", alertMsg);
+		model.addAttribute("errorCode", errorCode);
+		return "customer/AllBookings";
 	}
 }

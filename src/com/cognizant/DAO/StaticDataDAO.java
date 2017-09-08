@@ -9,4 +9,6 @@ public interface StaticDataDAO {
 	public ArrayList<Country> getCountriesList();
 
 	public ArrayList<City> getCitiesList();
+	
+	public ArrayList<City> getCitesOfCountry(int countryId);
 }

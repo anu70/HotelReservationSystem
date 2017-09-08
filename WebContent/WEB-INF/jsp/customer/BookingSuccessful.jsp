@@ -23,10 +23,24 @@
 		</header>
 		
 		<div class="form">
-			<img src="css/images/correct_icon.png" width="50px" height="50px"/><br>
-			Transaction Successful :${TransactionId}
-			<br> Your Booking id : ${BookingId}
+			<img src="css/images/correct_icon.png" width="50px" height="50px"/><br><br>
+			<b>Transaction Successful :</b>${TransactionId}<br>
+			<br> <b>Your Booking id :</b> ${BookingId}<br><br>
+			<b></b>
+		</div><br>
+		
+		<div class="form">
+			<span style="color: #719dab;font-weight:bold; font-size: 20pt">Payment Report:</span><br><br>
+			<b> Bank Name : </b> ${payment.bank_name}<br><br>
+			<b> Credit Card Number: </b>${payment.credit_card_no}<br><br>
+			<b>Card Type: </b> ${payment.card_type}<br><br>
+			<b>Name on Card: </b> ${payment.name_on_card}<br><br>
+			<b>Expiry Date: </b> ${payment.expiry_date}<br><br>
+			<b>cvv : </b> ${payment.cvv}<br><br>
+			<b>Account number : </b> ${payment.account_no}<br><br>
+			<b>Pin Number: </b> ${payment.atm_pin}<br><br>
+			<b></b><br>
 		</div>
-	</div>
+	</div><br>
 </body>
 </html>

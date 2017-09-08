@@ -29,6 +29,17 @@
 		</h1>
 		</header>
 		<div class="form">
+		<script type="text/javascript"> 
+		if("${alertMessage}"===""){
+			
+		}
+		else{
+			alert("${alertMessage}");
+			if("${errorCode}"==0)
+				window.location = 'welcomeAdmin';
+				
+		}
+		</script>
 		<script type="text/javascript">
 				$(document).ready(function() {
 					$('#hotelIdDropDown').change(function() {
